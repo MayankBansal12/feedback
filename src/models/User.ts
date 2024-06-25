@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface User extends Document {
+    name: string,
     email: string,
     password: string,
     isVerified: boolean,
@@ -9,6 +10,10 @@ export interface User extends Document {
 }
 
 const UserSchema: Schema<User> = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
     email: {
         type: String,
         required: [true, "Email is required!"],
