@@ -1,5 +1,4 @@
-/** @format */
-
+"use client";
 import Nav from "@/components/nav";
 
 export default function Home() {
@@ -14,7 +13,7 @@ export default function Home() {
               we know how difficult it is for a personality like you
               <br /> to handle all your fans on various apps.
             </p>
-            <p>dw, we’re here to help you out. 🧚‍♀️ </p>
+            <p>dw, we&apos;re here to help you out. 🧚‍♀️ </p>
             <p className="py-3">
               introducing <span className="font-bold">social.</span> a way to
               manage your digital
@@ -27,7 +26,7 @@ export default function Home() {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="1"
+              strokeWidth="1"
               stroke="currentColor"
               className="bg-light-secondary dark:bg-dark-secondary p-0 rounded-full size-16"
             >
@@ -48,34 +47,35 @@ export default function Home() {
               <div className="flex">
                 <span className="px-4">⭐</span>
                 <p>
-                  We'll safeguard you from distractions, so next time you post,
-                  you won't be scrolling for hours.
+                  We&apos;ll safeguard you from distractions, so next time you
+                  post, you won&apos;t be scrolling for hours.
                 </p>
               </div>
               <div className="flex">
                 <span className="px-4">⭐</span>
-                <p>If you wanna be more productive, you’ll love us.</p>
+                <p>If you wanna be more productive, you&apos;ll love us.</p>
               </div>
               <div className="flex">
                 <span className="px-4">⭐</span>
                 <p>
-                  And if you’re worried we won’t keep you up to date with all
-                  imp notifications, then you’re wrong my brother, we’ll notify
-                  you.
+                  And if you&apos;re worried we won&apos;t keep you up to date
+                  with all imp notifications, then you&apos;re wrong my brother
+                  ; we&apos;ll notify you.
                 </p>
               </div>
               <div className="flex">
                 <span className="px-4">⭐</span>
                 <p>
-                  We'll take care of your audience; you just focus on your
+                  We&apos;ll take care of your audience; you just focus on your
                   content.
                 </p>
               </div>
               <div className="flex">
                 <span className="px-4">⭐</span>
                 <p>
-                  Tired of replying to every 'congrats' comment? Don't worry,
-                  we'll handle that too, and trust me, they won’t even know.
+                  Tired of replying to every &apos;congrats&apos; comment?
+                  Don&apos;t worry, we&apos;ll handle that too, and trust me,
+                  they won&apos;t even know.
                 </p>
               </div>
             </div>

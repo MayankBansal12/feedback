@@ -1,15 +1,15 @@
-/** @format */
 "use client";
 
 import Image from "next/image";
 import logo from "../../asset/icon.svg";
 import { useState } from "react";
-import Nav from "@/components/nav";
+
 
 const LoginForm = () => {
   return (
     <div className="flex flex-col justify-center items-center w-full dark:text-white">
       <h1 className="mb-4 font-bold text-2xl">Hello Buddy 🙋‍♂️</h1>
+
       <form className="flex flex-col justify-center gap-4 w-1/3">
         <input
           type="email"
@@ -67,7 +67,7 @@ const RegisterForm = () => {
   );
 };
 
-export default function auth() {
+export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
@@ -86,7 +86,7 @@ export default function auth() {
           >
             {isLogin ? (
               <p>
-                Don't have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <span className="text-accent-link hover:underline">Signup</span>
               </p>
             ) : (
@@ -96,7 +96,7 @@ export default function auth() {
               </p>
             )}
           </button>
-        </div>{" "}
+        </div>
       </div>
     </>
   );
