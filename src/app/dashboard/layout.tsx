@@ -14,7 +14,7 @@ export default function RootLayout({
           <div className="w-1/6">
             <SideNav />
           </div>
-          <div>{children}</div>
+          <div className="w-5/6">{children}</div>
         </div>
       </body>
     </html>

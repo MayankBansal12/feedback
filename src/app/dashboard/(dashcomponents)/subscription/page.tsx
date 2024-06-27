@@ -1,9 +1,8 @@
 /** @format */
+import React from "react";
 
-export default function Connect() {
-  return (
-    <>
-      <p>Plans to make money</p>
-    </>
-  );
-}
+const Subscription = () => {
+  return <div>Subscribe Page Content</div>;
+};
+
+export default Subscription;

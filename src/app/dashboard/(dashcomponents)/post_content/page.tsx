@@ -1,9 +1,7 @@
 /** @format */
 
-export default function Post() {
-  return (
-    <>
-      <p>Post with your Apps</p>
-    </>
-  );
-}
+const Post = () => {
+  return <div>Post</div>;
+};
+
+export default Post;

@@ -1,9 +1,9 @@
 /** @format */
 
-export default function Notifications() {
-  return (
-    <>
-      <p>Notifications from various Apps</p>
-    </>
-  );
-}
+import React from "react";
+
+const Notifications = () => {
+  return <div>Notifications Page Content</div>;
+};
+
+export default Notifications;

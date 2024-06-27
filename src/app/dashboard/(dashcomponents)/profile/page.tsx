@@ -1,9 +1,7 @@
 /** @format */
 
-export default function Profile() {
-  return (
-    <>
-      <p>Your profile</p>
-    </>
-  );
-}
+const Profile = () => {
+  return <div>Profile</div>;
+};
+
+export default Profile;

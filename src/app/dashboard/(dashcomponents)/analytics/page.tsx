@@ -1,9 +1,8 @@
 /** @format */
+import React from "react";
 
-export default function Anaytics() {
-  return (
-    <>
-      <p>Anaytics how have you grown?</p>
-    </>
-  );
-}
+const Analytics = () => {
+  return <div>Analytics</div>;
+};
+
+export default Analytics;
