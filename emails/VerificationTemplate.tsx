@@ -18,7 +18,7 @@ export default function VerificationEmail({ name, otp }: VerificationEmailProps)
     return (
         <Html lang="en" dir="ltr">
             <Head>
-                <title>Verification Code</title>
+                <title>yo. verification code.</title>
                 <Font
                     fontFamily="Roboto"
                     fallbackFontFamily="Verdana"
@@ -30,15 +30,13 @@ export default function VerificationEmail({ name, otp }: VerificationEmailProps)
                     fontStyle="normal"
                 />
             </Head>
-            <Preview>Here&apos;s your verification code: {otp}</Preview>
+            <Preview>c'mon you made it. here&apos;s your verification code: {otp}</Preview>
             <Section>
                 <Row>
-                    <Heading as="h2">Hello {name},</Heading>
-                </Row>
-                <Row>
+                    <Text>hey {name.toLowerCase()}, you made it.</Text>
                     <Text>
-                        Thank you for registering on our platform. Please use the following verification
-                        code to complete your registration:
+                        welcome to social. thank you for siging up. please use the following verification
+                        code to complete your registration, it will expire in 1 hr:
                     </Text>
                 </Row>
                 <Row>
@@ -46,8 +44,9 @@ export default function VerificationEmail({ name, otp }: VerificationEmailProps)
                 </Row>
                 <Row>
                     <Text>
-                        If you did not request this code, please ignore this email.
+                        if you did not request this code, please ignore this email.
                     </Text>
+                    <Text>see ya:))</Text>
                 </Row>
             </Section>
         </Html>

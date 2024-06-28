@@ -6,9 +6,9 @@ import VerificationEmail from "../../emails/VerificationTemplate";
 export async function sendEmail(email: string, name: string, otp: string): Promise<ApiResponse> {
     try {
         const { data } = await resend.emails.send({
-            from: 'send@mayankbansal.xyz',
+            from: 'social <social@mayankbansal.xyz>',
             to: email,
-            subject: 'Verfication code',
+            subject: 'yo. verfication code.',
             react: VerificationEmail({ name, otp }),
         });
         return { success: true, status: 200, message: "Email sent!", data: data || [] }
