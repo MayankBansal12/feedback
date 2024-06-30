@@ -72,7 +72,7 @@ export default function Nav() {
           </span>
         </div>
         <span className="hover:underline hover:underline-offset-4">
-          <Link href="/auth">login</Link>
+          <Link href="/auth#login">login</Link>
         </span>
       </div>
     </nav>
