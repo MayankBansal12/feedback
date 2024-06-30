@@ -7,18 +7,21 @@ import { useEffect, useState } from "react";
 
 export default function Nav() {
   const [darkMode, setDarkMode] = useState(true);
+
   useEffect(() => {
     const theme = localStorage.getItem("theme");
     if (theme === "dark") {
       setDarkMode(true);
     }
   }, []);
+
   useEffect(() => {
     document.documentElement.classList.toggle("dark", darkMode);
     localStorage.setItem("theme", darkMode ? "dark" : "light");
-  });
+  }, [darkMode]);
+
   return (
-    <nav className="flex justify-between items-center bg-white bg-white dark:bg-dark-primary shadow-md px-4 lg:px-24 h-16 dark:text-white">
+    <nav className="flex justify-between items-center bg-white dark:bg-dark-primary shadow-md px-4 lg:px-24 h-16 dark:text-white">
       <div className="flex items-center">
         <Image src={icon} alt="logo" height={40} width={40} />
       </div>
@@ -28,9 +31,8 @@ export default function Nav() {
       <div className="flex items-center gap-5">
         <div className="flex gap-3 dark:border-dark-secondary border border-light-primary rounded-full overflow-hidden">
           <span
-            className={`transition-colors duration-300 p-1 rounded-full cursor-pointer ${
-              !darkMode ? "bg-light-primary" : ""
-            }`}
+            className={`transition-colors duration-300 p-1 rounded-full cursor-pointer ${!darkMode ? "bg-light-primary" : ""
+              }`}
             onClick={() => setDarkMode(false)}
           >
             <svg
@@ -49,9 +51,8 @@ export default function Nav() {
             </svg>
           </span>
           <span
-            className={`transition-colors duration-300 p-1 rounded-full cursor-pointer ${
-              darkMode ? "bg-dark-secondary" : ""
-            }`}
+            className={`transition-colors duration-300 p-1 rounded-full cursor-pointer ${darkMode ? "bg-dark-secondary" : ""
+              }`}
             onClick={() => setDarkMode(true)}
           >
             <svg

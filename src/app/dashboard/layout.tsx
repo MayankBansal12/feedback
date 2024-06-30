@@ -10,7 +10,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="w-screen h-screen font-default">
         <Nav />
-        <div className="flex">
+        <div className="flex h-[calc(100vh-4rem)]">
           <div className="w-1/6">
             <SideNav />
           </div>

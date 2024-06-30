@@ -60,16 +60,16 @@ const Post = () => {
   return (
     <div className="flex flex-col dark:bg-dark-secondary px-10 py-10 w-full h-full dark:text-white">
       <div className="flex flex-col justify-start gap-3 w-full text-left">
-        <p className="text-xl">What’s on your mind?</p>
+        <p className="text-xl">what’s on your mind?</p>
         <p className="text-md">
-          We’ll share your thoughts across the world 🌎️
+          we’ll share your thoughts across the world 🌎️
         </p>
       </div>
       <div className="flex flex-col justify-center items-center">
         <div className="gap-2 dark:border-white grid my-10 border border-black w-full">
           <textarea
-            placeholder="Write it down..."
-            className="bg-white dark:bg-dark-secondary px-4 py-1 dark:border-l-[#ffffff] text-black text-md outline-none hover:outline focus:outline"
+            placeholder="write it down..."
+            className="bg-white dark:bg-dark-secondary px-4 py-1 dark:border-l-[#ffffff] dark:text-white text-md outline-none hover:outline focus:outline"
           />
           <div className="flex justify-between items-center bg-light-primary bg-muted dark:bg-dark-primary m-2 px-4 py-2">
             <div className="flex items-center gap-2">
@@ -89,7 +89,7 @@ const Post = () => {
           type="submit"
           className="bg-accent-link hover:bg-accent-buttonhover p-1 rounded-full w-48 text-white"
         >
-          Post
+          post
         </button>
       </div>
     </div>

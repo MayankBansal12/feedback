@@ -5,19 +5,19 @@ import { usePathname } from "next/navigation";
 
 export default function SideNav() {
   const navLinks = [
-    { name: "Dash", link: "/dashboard/analytics" },
-    { name: "Connect App", link: "/dashboard/connect" },
-    { name: "Post", link: "/dashboard/post_content" },
-    { name: "Notifications", link: "/dashboard/notifications" },
-    { name: "Subscription", link: "/dashboard/subscription" },
-    { name: "Profile", link: "/dashboard/profile" },
+    { name: "dash", link: "/dashboard/analytics" },
+    { name: "connect app", link: "/dashboard/connect" },
+    { name: "post", link: "/dashboard/post_content" },
+    { name: "notifications", link: "/dashboard/notifications" },
+    { name: "subscription", link: "/dashboard/subscription" },
+    { name: "profile", link: "/dashboard/profile" },
   ];
   const pathname = usePathname();
   return (
-    <div className="flex flex-col bg-light-primary dark:bg-dark-primary w-full h-[100vh] text-black dark:text-white">
-      <div className="flex justify-center items-center py-20">
+    <div className="flex flex-col bg-light-primary dark:bg-dark-primary w-full h-[calc(100vh-4rem)] justify-center text-black dark:text-white">
+      <div className="flex justify-center items-center">
         <div className="flex flex-col justify-center items-center gap-20">
-          <div className="flex flex-col gap-1 w-full">
+          <div className="flex flex-col gap-2 w-full">
             {navLinks.map((link, index) => {
               const isActive = pathname.startsWith(link.link);
               return (
@@ -33,14 +33,14 @@ export default function SideNav() {
           </div>
           <hr className="border-2 border-gray-400 rounded-full w-1/2" />
           <div className="px-3 py-3 pb-8 border border-black dark:border-light-primary">
-            We care about <br />
-            your security so
+            we care about <br />
+            your privacy so
             <br />
             don&apos;t worry.
             <br />
-            Everything is
+            everything is
             <br />
-            safe 😌
+            safe. ^-^
           </div>
         </div>
       </div>
