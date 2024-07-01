@@ -21,7 +21,7 @@ export async function POST(request: Request) {
             return new Response(JSON.stringify(response), { status: response.status })
         }
         if (!user.isVerified) {
-            response = { success: false, status: 400, message: "Email not verified!", data: { isVerified: false } }
+            response = { success: false, status: 200, message: "Email not verified!", data: { isVerified: false } }
             return new Response(JSON.stringify(response), { status: response.status })
         }
         const isPasswordMatch = await bcrypt.compare(password, user.password);
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
             response = { success: false, status: 400, message: error.errors[0].message };
         } else {
             console.error("Error signing in user!", error);
-            response = { success: false, status: 400, message: "Error registering user" };
+            response = { success: false, status: 400, message: "Error signing in user" };
         }
         return new Response(JSON.stringify(response), { status: response.status })
     }

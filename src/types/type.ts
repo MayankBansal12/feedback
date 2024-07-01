@@ -6,6 +6,7 @@ export interface LoginFormProps {
     password: string;
     setPassword: Dispatch<SetStateAction<string>>;
     handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
+    isLoading: boolean;
 }
 
 export interface RegisterFormProps {
@@ -18,4 +19,5 @@ export interface RegisterFormProps {
     confirmPassword: string;
     setConfirmPassword: Dispatch<SetStateAction<string>>;
     handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
+    isLoading: boolean;
 }
