@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <Nav />
-      <main className="flex flex-col justify-between items-center bg-white dark:bg-dark-secondary min-h-screen font-default">
+      <div className="flex flex-col justify-between items-center bg-white dark:bg-dark-secondary min-h-screen font-default">
         <div className="flex flex-col items-center h-screen">
           <div className="space-y-4 px-4 md:px-32 py-10 md:py-20 w-full text-black text-center text-xl md:text-3xl dark:text-white">
             <p>hi buddy,</p>
@@ -91,7 +91,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </main>
+      </div>
     </>
   );
 }

@@ -1,10 +1,9 @@
 "use client";
 
-import Image from "next/image";
-import logo from "../../asset/icon.svg";
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import { LoginFormProps, RegisterFormProps } from "@/types/type";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 const LoginForm: FC<LoginFormProps> = ({ email, setEmail, password, setPassword, handleSubmit }) => {
   return (
@@ -98,14 +97,13 @@ export default function Auth() {
   const [confirmPassword, setConfirmPassword] = useState("")
   const [name, setName] = useState("")
   const router = useRouter()
+  const { toast } = useToast()
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const path = window.location.hash || window.location.pathname;
-      setIsLogin(path.includes('#login'));
-      console.log("path ", path)
-    }
-  }, []);
+  // useEffect(() => {
+  //   const path = router2.asPath;
+  //   setIsLogin(path.includes('#login'));
+  //   console.log('path', path);
+  // }, [router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -113,7 +111,11 @@ export default function Auth() {
 
     if (!isLogin && password !== confirmPassword) {
       // replace with toast or alert instead of window alert
-      alert("password and confirm password do not match")
+
+      toast({
+        title: "oops! you sure you remember the password?",
+        description: "password and confirm password do not match",
+      })
       return;
     }
 
@@ -137,71 +139,73 @@ export default function Auth() {
         console.log("Success:", data.data);
 
         localStorage.setItem("token", data.data.token)
-        data.data.isVerified ? router.replace("/dashboard") : router.replace("/verify-email")
+        data.data.isVerified ? router.replace("/dashboard") : router.replace("/auth/verify-email")
       } else {
         const errorData = await response.json();
         console.error("Error:", errorData);
-        // replace with toast later
-        alert(errorData.message)
+
+        toast({
+          variant: "destructive",
+          title: "caught up with an error",
+          description: errorData.message.toLowerCase(),
+        })
       }
     } catch (error) {
-      console.error("Network error:", error);
+      console.log("error: ", error)
+      toast({
+        variant: "destructive",
+        title: "caught up with an error",
+        description: "Error, try again!",
+      })
     }
   };
 
   return (
-    <div className="flex items-center w-screen h-screen">
-      <div className="flex flex-col justify-center items-center gap-4 bg-dark-primary w-1/2 h-full text-white">
-        <Image src={logo} width={100} height={100} alt="logo" />
-        <h1 className="font-bold text-6xl text-white">social.</h1>
-        <p>happy to know that you wanna be part of us : &#41;&#41;</p>
-      </div>
-      <div className="flex flex-col justify-center items-center dark:bg-dark-secondary p-4 w-full h-full text-black dark:text-white">
-        {isLogin ? (
-          <LoginForm
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
-            handleSubmit={handleSubmit}
-          />
-        ) : (
-          <RegisterForm
-            name={name}
-            setName={setName}
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
-            confirmPassword={confirmPassword}
-            setConfirmPassword={setConfirmPassword}
-            handleSubmit={handleSubmit}
-          />
-        )}
+    <div className="flex flex-col justify-center items-center dark:bg-dark-secondary p-4 w-full h-screen text-black dark:text-white">
+      {isLogin ? (
+        <LoginForm
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          handleSubmit={handleSubmit}
+        />
+      ) : (
+        <RegisterForm
+          name={name}
+          setName={setName}
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          confirmPassword={confirmPassword}
+          setConfirmPassword={setConfirmPassword}
+          handleSubmit={handleSubmit}
+        />
+      )}
 
-        <button
-          className="mt-4"
-          onClick={() => setIsLogin(!isLogin)}
-        >
-          {isLogin ? (
-            <>
-              <p>
-                don&apos;t have an account?{" "}
-                <span className="text-accent-link hover:underline" onClick={() => router.replace("/auth#signup")}>signup</span>
-              </p>
-              <p>
-                forgot password?{" "}
-                <span className="text-accent-link hover:underline" onClick={() => router.replace("/reset")}>reset</span>
-              </p>
-            </>
-          ) : (
+      <button
+        className="mt-4"
+        onClick={() => setIsLogin(!isLogin)}
+      >
+        {isLogin ? (
+          <>
             <p>
-              already have an account?{" "}
-              <span className="text-accent-link hover:underline" onClick={() => router.replace("/auth#login")}>login</span>
+              don&apos;t have an account?{" "}
+              <span className="text-accent-link hover:underline" onClick={() => router.replace("/auth#signup")}>signup</span>
             </p>
-          )}
-        </button>
-      </div>
+            <p>
+              forgot password?{" "}
+              <span className="text-accent-link hover:underline" onClick={() => router.replace("/reset")}>reset</span>
+            </p>
+          </>
+        ) : (
+          <p>
+            already have an account?{" "}
+            <span className="text-accent-link hover:underline" onClick={() => router.replace("/auth#login")}>login</span>
+          </p>
+        )}
+      </button>
     </div>
   );
 }
