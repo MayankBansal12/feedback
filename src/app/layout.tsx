@@ -1,6 +1,7 @@
 /** @format */
 
 import type { Metadata } from "next";
+import { Toaster } from "@/components/ui/toaster"
 
 import "./globals.css";
 
@@ -16,7 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-default">{children}</body>
+      <head />
+      <body className="font-default">
+        <main>{children}</main>
+        <Toaster />
+      </body>
     </html>
   );
 }
