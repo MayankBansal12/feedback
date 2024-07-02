@@ -6,6 +6,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from "@vercel/analytics/react";
 
 import "./globals.css";
+import StoreIntializer from "@/helpers/StoreIntializer";
 
 export const metadata: Metadata = {
   title: "The Social App",
@@ -17,13 +18,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <head />
       <body className="font-default">
+        <StoreIntializer />
         <main>{children}</main>
         <Toaster />
-
         <Analytics />
         <SpeedInsights />
       </body>

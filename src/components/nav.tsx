@@ -4,9 +4,11 @@ import Link from "next/link";
 import icon from "../asset/icon.svg";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useUserStore } from "@/global-store/store";
 
 export default function Nav() {
   const [darkMode, setDarkMode] = useState(true);
+  const { user } = useUserStore()
 
   useEffect(() => {
     const theme = localStorage.getItem("theme");
@@ -21,7 +23,7 @@ export default function Nav() {
   }, [darkMode]);
 
   return (
-    <nav className="flex justify-between items-center bg-white dark:bg-dark-primary shadow-md px-4 lg:px-24 h-16 dark:text-white">
+    <div className="flex justify-between items-center bg-white dark:bg-dark-primary shadow-md px-4 lg:px-24 h-16 dark:text-white">
       <div className="flex items-center">
         <Image src={icon} alt="logo" height={40} width={40} />
       </div>
@@ -72,9 +74,9 @@ export default function Nav() {
           </span>
         </div>
         <span className="hover:underline hover:underline-offset-4">
-          <Link href="/auth#login">login</Link>
+          {user ? <Link href="/dashboard">dashboard</Link> : <Link href="/auth#login">login</Link>}
         </span>
       </div>
-    </nav>
+    </div>
   );
 }
