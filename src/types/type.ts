@@ -21,3 +21,11 @@ export interface RegisterFormProps {
     handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
     isLoading: boolean;
 }
+
+
+export interface UserType {
+    _id: number
+    name: string
+    email: string
+    isVerified: boolean
+}
