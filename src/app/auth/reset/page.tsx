@@ -2,8 +2,7 @@
 
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import { useState, ChangeEvent } from "react"
-
+import { useState, ChangeEvent } from "react";
 
 export default function Reset() {
     const [email, setEmail] = useState("")
@@ -11,10 +10,8 @@ export default function Reset() {
     const [isLoading, setIsLoading] = useState(false)
     const { toast } = useToast()
 
-
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("reset: ", email)
 
         if (!email) {
             toast({
@@ -26,7 +23,7 @@ export default function Reset() {
         setIsLoading(true)
 
         try {
-            const response = await fetch("/api/reset", {
+            const response = await fetch("/api/reset-password", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -35,14 +32,10 @@ export default function Reset() {
             });
 
             if (response.ok) {
-                const data = await response.json();
-                console.log("Success:", data.data);
-
                 toast({
                     title: "email sent!",
                     description: "check your email for instructions to reset password",
                 })
-
                 router.replace("/auth?login=true")
             } else {
                 const errorData = await response.json();
