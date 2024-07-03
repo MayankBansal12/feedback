@@ -60,7 +60,7 @@ export async function PUT(request: Request) {
 
     try {
         const requestData = await request.json()
-        const email = emailValidation.safeParse(requestData.email)
+        const email = emailValidation.parse(requestData.email)
 
         const user = await UserModel.findOne({ email })
         if (!user) {
