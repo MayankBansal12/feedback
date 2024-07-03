@@ -1,5 +1,6 @@
 "use client";
 import Nav from "@/components/nav";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -8,7 +9,7 @@ export default function Home() {
       <div className="flex flex-col justify-between items-center bg-white dark:bg-dark-secondary min-h-screen font-default">
         <div className="flex flex-col items-center h-screen">
           <div className="space-y-4 px-4 md:px-32 py-10 md:py-20 w-full text-black text-center text-xl md:text-3xl dark:text-white">
-            <p>hi buddy,</p>
+            <p>hey homie,</p>
             <p>
               we know how difficult it is for a personality like you
               <br /> to handle all your fans on various apps.
@@ -40,10 +41,10 @@ export default function Home() {
         </div>
         <div className="flex flex-cols justify-center items-center bg-dark-primary mt-64 py-2 w-full">
           <div className="border-dark-primary mx-4 lg:mx-48 -mt-52 border rounded-xl w-full overflow-hidden">
-            <div className="bg-light-primary py-4 p-3 text-center text-xl md:text-3xl">
+            <div className="bg-light-primary text-black py-4 p-3 text-center text-xl md:text-3xl">
               <p>Here are the top 5 reasons to chose us ;)</p>
             </div>
-            <div className="space-y-4 bg-light-secondary px-4 lg:px-24 py-4 lg:py-20 text-md md:text-xl">
+            <div className="space-y-4 bg-light-secondary text-black px-4 lg:px-24 py-4 lg:py-20 text-md md:text-xl">
               <div className="flex">
                 <span className="px-4">⭐</span>
                 <p>
@@ -81,8 +82,10 @@ export default function Home() {
             </div>
             <div className="py-6 text-center">
               <p className="text-white">
-                Made with &lsaquo;❤️&rsaquo; by -<br /> @arghya, @mayank, &
-                @saakshi
+                Made with &lsaquo;❤️&rsaquo; by -<br />
+                <Link href="https://github.com/arghyahub"> @arghya</Link> {" "}
+                , <Link href="https://github.com/saakshiraut28">@saakshi</Link> {" "}
+                & <Link href="https://github.com/mayankbansal12">@mayank</Link>
               </p>
             </div>
             <div className="flex gap-6 py-4 text-left">
