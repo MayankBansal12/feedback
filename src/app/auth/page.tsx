@@ -2,13 +2,16 @@
 
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import { LoginFormProps, RegisterFormProps } from "@/types/type";
-import { useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 
 const LoginForm: FC<LoginFormProps> = ({ email, setEmail, password, setPassword, handleSubmit, isLoading }) => {
   return (
-    <div className="flex flex-col justify-center items-center w-full dark:text-white">
-      <h1 className="mb-4 font-bold flex gap-2 items-center"><span className="text-2xl">hello buddy</span> <span className="text-md">(ᴖᴗᴖ)</span></h1>
+    <div className="flex flex-col gap-6 justify-center items-center w-full dark:text-white">
+      <div className="text-center flex gap-1 flex-col">
+        <h1 className="font-bold flex gap-2 items-center"><span className="text-2xl">hello buddy</span> <span className="text-md">(ᴖᴗᴖ)</span></h1>
+        <p className="text-sm opacity-70">login using email and password</p>
+      </div>
 
       <form className="flex flex-col justify-center gap-4 w-1/3" onSubmit={handleSubmit}>
         <input
@@ -43,8 +46,11 @@ const LoginForm: FC<LoginFormProps> = ({ email, setEmail, password, setPassword,
 
 const RegisterForm: FC<RegisterFormProps> = ({ name, setName, email, setEmail, password, setPassword, confirmPassword, setConfirmPassword, handleSubmit, isLoading }) => {
   return (
-    <div className="flex flex-col justify-center items-center w-full dark:text-white">
-      <h1 className="mb-4 font-bold flex gap-2 items-center"><span className="text-2xl">welcome buddy</span> <span className="text-md">(ᴖᴗᴖ)</span></h1>
+    <div className="flex flex-col gap-6 justify-center items-center w-full dark:text-white">
+      <div className="text-center flex gap-1 flex-col">
+        <h1 className="font-bold flex gap-2 items-center"><span className="text-2xl">welcome buddy</span> <span className="text-md">(ᴖᴗᴖ)</span></h1>
+        <p className="text-sm opacity-70">signup with your personal or work email</p>
+      </div>
       <form className="flex flex-col justify-center gap-4 w-1/3" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -93,7 +99,8 @@ const RegisterForm: FC<RegisterFormProps> = ({ name, setName, email, setEmail, p
 };
 
 export default function Auth() {
-  const [isLogin, setIsLogin] = useState(true)
+  const params = useSearchParams()
+  const [isLogin, setIsLogin] = useState(false)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
@@ -103,11 +110,8 @@ export default function Auth() {
   const { toast } = useToast()
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const path = window.location.hash || window.location.pathname;
-      setIsLogin(path.includes('#login'));
-    }
-  }, []);
+    setIsLogin(params.get("login") === "true" || false)
+  }, [params])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -196,25 +200,22 @@ export default function Auth() {
         />
       )}
 
-      <button
-        className="mt-4"
-        onClick={() => setIsLogin(!isLogin)}
-      >
+      <button className="mt-4">
         {isLogin ? (
           <div>
             <p>
               don&apos;t have an account?{" "}
-              <span className="text-accent-link hover:underline" onClick={() => router.replace("/auth#signup")}>signup</span>
+              <span className="text-accent-link hover:underline" onClick={() => router.replace("/auth")}>signup</span>
             </p>
             <p>
               forgot password?{" "}
-              <span className="text-accent-link hover:underline" onClick={() => router.replace("/auth/reset-password")}>reset</span>
+              <span className="text-accent-link hover:underline" onClick={() => router.replace("/auth/reset")}>reset</span>
             </p>
           </div>
         ) : (
           <p>
             already have an account?{" "}
-            <span className="text-accent-link hover:underline" onClick={() => router.replace("/auth#login")}>login</span>
+            <span className="text-accent-link hover:underline" onClick={() => router.replace("/auth?login=true")}>login</span>
           </p>
         )}
       </button>
