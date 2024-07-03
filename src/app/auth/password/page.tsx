@@ -2,9 +2,9 @@
 
 import { useToast } from "@/components/ui/use-toast"
 import { useRouter, useSearchParams } from "next/navigation"
-import { useState, ChangeEvent, useEffect } from "react"
+import { useState, ChangeEvent, useEffect, Suspense } from "react"
 
-export default function Password() {
+const PasswordComponent = () => {
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [isLoading, setIsLoading] = useState(false)
@@ -14,14 +14,13 @@ export default function Password() {
     const token = params.get("token")
 
     useEffect(() => {
-        const token = params.get("token")
         if (!token) {
-            router.replace("/auth?login=true")
             toast({
                 title: "invalid request!",
             })
+            router.replace("/auth?login=true")
         }
-    }, [params])
+    }, [token, router])
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -111,5 +110,13 @@ export default function Password() {
                 </div>
             </form>
         </div>
+    )
+}
+
+export default function Password() {
+    return (
+        <Suspense fallback={<div>loading...</div>}>
+            <PasswordComponent />
+        </Suspense>
     )
 }

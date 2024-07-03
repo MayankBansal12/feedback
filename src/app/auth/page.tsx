@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, FC, useEffect, useState } from "react";
+import { ChangeEvent, FC, Suspense, useEffect, useState } from "react";
 import { LoginFormProps, RegisterFormProps } from "@/types/type";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
@@ -98,7 +98,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ name, setName, email, setEmail, p
   );
 };
 
-export default function Auth() {
+const AuthComponent = () => {
   const params = useSearchParams()
   const [isLogin, setIsLogin] = useState(false)
   const [email, setEmail] = useState("")
@@ -108,10 +108,11 @@ export default function Auth() {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const { toast } = useToast()
+  const loginParam = params.get("login")
 
   useEffect(() => {
-    setIsLogin(params.get("login") === "true" || false)
-  }, [params])
+    setIsLogin(loginParam === "true" || false)
+  }, [loginParam])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -221,4 +222,12 @@ export default function Auth() {
       </button>
     </div>
   );
+}
+
+export default function Auth() {
+  return (
+    <Suspense fallback={<div>loading...</div>}>
+      <AuthComponent />
+    </Suspense>
+  )
 }
