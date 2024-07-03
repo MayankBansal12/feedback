@@ -43,11 +43,6 @@ const PasswordComponent = () => {
             });
 
             if (response.ok) {
-                const data = await response.json();
-                console.log("Success:", data.data);
-
-                localStorage.setItem("token", data.data.token)
-
                 toast({
                     title: "password changed",
                     description: "you can login now!",
