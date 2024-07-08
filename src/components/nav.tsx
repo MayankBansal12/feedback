@@ -28,7 +28,7 @@ export default function Nav() {
         <Image src={icon} alt="logo" height={40} width={40} />
       </div>
       <div className="font-black text-2xl">
-        <span>social.</span>
+        <span>feedback.</span>
       </div>
       <div className="flex items-center gap-5">
         <div className="flex gap-3 dark:border-dark-secondary border border-light-primary rounded-full overflow-hidden">

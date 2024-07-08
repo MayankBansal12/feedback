@@ -12,10 +12,9 @@ const Notifications = () => {
       <div className="flex flex-col justify-center items-center gap-5 py-10 w-full">
         <div className="flex flex-col my-5 w-full">
           <div className="dark:border-white p-3 border border-black">
-            <p className="font-semibold text-xl">platfrom. username.</p>
+            <p className="font-semibold text-xl">form name.</p>
             <p className="py-2 font-semibold text-md">
-              @saakshi_raut commented “Hello world” on the post you recently
-              shared.{" "}
+              a user commented “nice ui” on recently created feedback form.
             </p>
             <p className="mt-2 text-md">2 days ago.</p>
           </div>
