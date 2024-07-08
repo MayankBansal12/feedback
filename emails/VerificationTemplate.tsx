@@ -35,7 +35,7 @@ export default function VerificationEmail({ name, otp }: VerificationEmailProps)
                 <Row>
                     <Text>hey {name.toLowerCase()}, you made it.</Text>
                     <Text>
-                        welcome to social. thank you for siging up. please use the following verification
+                        welcome to feedback. thank you for siging up. please use the following verification
                         code to complete your registration, it will expire in 1 hr:
                     </Text>
                 </Row>

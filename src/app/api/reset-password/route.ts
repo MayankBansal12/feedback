@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { sendResetEmail } from "@/helpers/sendEmail";
+import { sendResetEmail } from "@/helpers/resendEmail";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/User";
 import { ApiResponse } from "@/types/ApiResponse";

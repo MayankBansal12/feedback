@@ -1,4 +1,4 @@
-import { sendEmail } from "@/helpers/sendEmail";
+import { sendEmail } from "@/helpers/resendEmail";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/User";
 import { z } from "zod";

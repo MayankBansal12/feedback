@@ -20,7 +20,7 @@ export default function ResetTemplate({ name, token }: ResetTemplateProps) {
     return (
         <Html lang="en" dir="ltr">
             <Head>
-                <title>reset your social password.</title>
+                <title>reset your feedback password.</title>
                 <Font
                     fontFamily="Roboto"
                     fallbackFontFamily="Verdana"
@@ -48,7 +48,7 @@ export default function ResetTemplate({ name, token }: ResetTemplateProps) {
                         if you didn't request reset password, please ignore this email.
                     </Text>
                     <Text>see ya:))</Text>
-                    <Text>-social.</Text>
+                    <Text>-feedback.</Text>
                 </Row>
             </Section>
         </Html >
