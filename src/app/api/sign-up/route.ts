@@ -2,7 +2,7 @@ import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/User";
 import bcrypt from "bcryptjs";
 import { ApiResponse } from "@/types/ApiResponse";
-import { sendEmail } from "@/helpers/sendEmail";
+import { sendEmail } from "@/helpers/resendEmail";
 import jwt from "jsonwebtoken";
 import { signUpSchema } from "@/schemas/signUpSchema";
 import { z } from "zod"
