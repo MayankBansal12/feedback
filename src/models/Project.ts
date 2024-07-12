@@ -5,7 +5,8 @@ export interface Project extends Document {
     name: string,
     desc?: string,
     userId: Types.UUID,
-    createdDate: Date
+    createdDate: Date,
+    isDeleted: boolean
 }
 
 const ProjectSchema: Schema<Project> = new Schema({
@@ -17,14 +18,18 @@ const ProjectSchema: Schema<Project> = new Schema({
         type: String,
         required: false
     },
+    userId: {
+        type: Types.UUID,
+        required: true
+    },
     createdDate: {
         type: Date,
         required: true,
         default: new Date()
     },
-    userId: {
-        type: Types.UUID,
-        required: true
+    isDeleted: {
+        type: Boolean,
+        default: false
     }
 })
 

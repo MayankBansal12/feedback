@@ -4,23 +4,31 @@ export interface Record extends Document {
     text: string,
     rating: number,
     createdDate: Date,
-    formId: Types.UUID
+    formId: Types.UUID,
+    isDeleted: boolean
 }
 
 const Record: Schema<Record> = new Schema({
     text: {
-        type: String
+        type: String,
+        required: false
     },
     rating: {
-        type: Number
-    },
-    createdDate: {
-        type: Date,
-        required: true
+        type: Number,
+        required: false
     },
     formId: {
         type: Types.UUID,
         required: true
+    },
+    createdDate: {
+        type: Date,
+        required: true,
+        default: new Date()
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false
     }
 })
 
