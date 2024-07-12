@@ -7,6 +7,7 @@ export interface User extends Document {
     isVerified: boolean,
     verifyCode: string,
     verifyCodeExpiry: Date,
+    clientSecret: string,
     createdDate: Date,
     isDeleted: boolean
 }
@@ -38,6 +39,11 @@ const UserSchema: Schema<User> = new Schema({
         type: Date,
         required: [true, "Verify code expiry is required!"]
     },
+    clientSecret: {
+        type: String,
+        required: true,
+        default: getSecret()
+    },
     createdDate: {
         type: Date,
         required: true,
@@ -48,6 +54,19 @@ const UserSchema: Schema<User> = new Schema({
         default: false
     }
 })
+
+function getSecret() {
+    let secret = "";
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    const length = 12
+
+    for (let i = 0; i < length; i++) {
+        const index = Math.floor(Math.random() * length)
+        secret += chars.charAt(index)
+    }
+    return secret;
+}
+
 
 const UserModel = (mongoose.models.User as mongoose.Model<User>) || (mongoose.model<User>("User", UserSchema))
 export default UserModel;
