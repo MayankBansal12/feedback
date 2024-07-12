@@ -6,7 +6,9 @@ export interface User extends Document {
     password: string,
     isVerified: boolean,
     verifyCode: string,
-    verifyCodeExpiry: Date
+    verifyCodeExpiry: Date,
+    createdDate: Date,
+    isDeleted: boolean
 }
 
 const UserSchema: Schema<User> = new Schema({
@@ -36,6 +38,15 @@ const UserSchema: Schema<User> = new Schema({
         type: Date,
         required: [true, "Verify code expiry is required!"]
     },
+    createdDate: {
+        type: Date,
+        required: true,
+        default: new Date()
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false
+    }
 })
 
 const UserModel = (mongoose.models.User as mongoose.Model<User>) || (mongoose.model<User>("User", UserSchema))

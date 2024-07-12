@@ -1,13 +1,13 @@
 import mongoose, { Schema, Types } from "mongoose";
 
 
-
 export interface Form extends Document {
     name: string,
     heading: string,
     type: string,
     createdDate: Date,
-    projectId: Types.UUID
+    projectId: Types.UUID,
+    isDeleted: boolean
 }
 
 const Form: Schema<Form> = new Schema({
@@ -23,14 +23,18 @@ const Form: Schema<Form> = new Schema({
         type: String,
         required: true
     },
+    projectId: {
+        type: Types.UUID,
+        required: true
+    },
     createdDate: {
         type: Date,
         required: true,
         default: new Date()
     },
-    projectId: {
-        type: Types.UUID,
-        required: true
+    isDeleted: {
+        type: Boolean,
+        default: false
     }
 })
 
