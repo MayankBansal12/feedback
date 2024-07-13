@@ -1,10 +1,16 @@
 import mongoose, { Schema, Types } from "mongoose";
 
+export enum FormType {
+    SHORT = "short",
+    BIG = "big",
+    LONG = "long",
+    CLICK = "click"
+}
 
 export interface Form extends Document {
     name: string,
     heading: string,
-    type: string,
+    type: FormType,
     createdDate: Date,
     projectId: Types.UUID,
     isDeleted: boolean
@@ -21,7 +27,8 @@ const Form: Schema<Form> = new Schema({
     },
     type: {
         type: String,
-        required: true
+        required: true,
+        enum: Object.values(FormType)
     },
     projectId: {
         type: Types.UUID,
