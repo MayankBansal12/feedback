@@ -24,7 +24,7 @@ const Record: Schema<Record> = new Schema({
     createdDate: {
         type: Date,
         required: true,
-        default: new Date()
+        default: Date.now
     },
     isDeleted: {
         type: Boolean,

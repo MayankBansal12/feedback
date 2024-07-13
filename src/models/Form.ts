@@ -30,7 +30,7 @@ const Form: Schema<Form> = new Schema({
     createdDate: {
         type: Date,
         required: true,
-        default: new Date()
+        default: Date.now
     },
     isDeleted: {
         type: Boolean,
