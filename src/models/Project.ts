@@ -1,10 +1,10 @@
-import mongoose, { Schema, Types } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 
 export interface Project extends Document {
     name: string,
     desc?: string,
-    userId: Types.UUID,
+    userId: Schema.Types.ObjectId,
     createdDate: Date,
     isDeleted: boolean
 }
@@ -19,7 +19,7 @@ const ProjectSchema: Schema<Project> = new Schema({
         required: false
     },
     userId: {
-        type: Types.UUID,
+        type: Schema.Types.ObjectId,
         required: true
     },
     createdDate: {

@@ -1,4 +1,4 @@
-import mongoose, { Schema, Types } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 export enum FormType {
     SHORT = "short",
@@ -12,7 +12,7 @@ export interface Form extends Document {
     heading: string,
     type: FormType,
     createdDate: Date,
-    projectId: Types.UUID,
+    projectId: Schema.Types.ObjectId,
     isDeleted: boolean
 }
 
@@ -31,8 +31,9 @@ const Form: Schema<Form> = new Schema({
         enum: Object.values(FormType)
     },
     projectId: {
-        type: Types.UUID,
-        required: true
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'Project'
     },
     createdDate: {
         type: Date,

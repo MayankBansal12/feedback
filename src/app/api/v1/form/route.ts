@@ -7,6 +7,7 @@ import { formSchema } from "@/schemas/formSchema";
 import { ApiResponse } from "@/types/ApiResponse";
 import { NextRequest } from "next/server";
 import { z } from "zod";
+import { ObjectId } from "mongodb";
 
 export async function GET(req: NextRequest) {
     await dbConnect()
@@ -21,9 +22,12 @@ export async function GET(req: NextRequest) {
     try {
         const searchParams = req.nextUrl.searchParams
         const projectId = searchParams.get('projectId')
-        const forms = await FormModel.find({ projectId }).sort({ createdDate: -1 })
-
-        response = { success: true, status: 200, message: "fetched all forms!", data: forms };
+        if (!projectId) {
+            response = { success: true, status: 400, message: "record can't be empty" };
+        } else {
+            const forms = await FormModel.find({ projectId: new ObjectId(projectId) }).sort({ createdDate: -1 })
+            response = { success: true, status: 200, message: "fetched all forms!", data: forms };
+        }
         return new Response(JSON.stringify(response), { status: response.status })
     } catch (error) {
         if (error instanceof z.ZodError) {

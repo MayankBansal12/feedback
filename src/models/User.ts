@@ -2,8 +2,8 @@ import mongoose, { Schema, Document } from "mongoose";
 
 function getSecret() {
     let secret = "";
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-    const length = 12
+    const chars = "ABCTU5678VWXYZabcdefghijklmnoDEFGHIJKL01234MNOPQRSpqrstuvwxyz9"
+    const length = 36
 
     for (let i = 0; i < length; i++) {
         const index = Math.floor(Math.random() * length)

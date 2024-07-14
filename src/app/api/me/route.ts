@@ -3,7 +3,7 @@ import UserModel from "@/models/User";
 import { ApiResponse } from "@/types/ApiResponse";
 import jwt from "jsonwebtoken";
 
-const secret = process.env.JWT_SECRET || "";
+const secret = process.env.JWT_SECRET ?? "";
 
 export async function GET(request: Request) {
     await dbConnect();
@@ -29,7 +29,7 @@ export async function GET(request: Request) {
             response = { success: false, status: 400, message: "Unable to find user!", data: { user: null } }
             return new Response(JSON.stringify(response), { status: response.status })
         }
-        response = { success: true, status: 200, message: "User authenticated!", data: { user } }
+        response = { success: true, status: 200, message: "User authenticated!", data: { userId: user._id, name: user.name, email: user.email, isVerified: user.isVerified, createdDate: user.createdDate } }
         return new Response(JSON.stringify(response), { status: response.status })
     } catch (error) {
         console.error("Error while authenticating user", error);
