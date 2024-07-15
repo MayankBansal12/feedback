@@ -5,7 +5,12 @@ import Link from "next/link";
 import React, { useState } from "react";
 
 const Analytics = () => {
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState([1]);
+  const [editModal, setEditModal] = useState<boolean>(false);
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
+  const deleteHandler = () => {
+    // delete code
+  };
   return (
     <div className="flex flex-col dark:bg-dark-secondary px-10 py-10 w-full h-full dark:text-white">
       <div className="flex flex-col justify-start gap-3 my-4 w-full text-left">
@@ -34,14 +39,18 @@ const Analytics = () => {
       ) : (
         <div className="shadow-lg my-4 p-4 border border-light-primary dark:border-light-primary rounded-sm">
           <div className="flex justify-between items-center mb-4">
-            <div className="flex items-center gap-3">
-              <Dock size={20} />
-              <p className="font-semibold text-xl underline">
-                application name
-              </p>
-            </div>
+            <Link href="/dashboard/analytics/app_id1">
+              <div className="flex items-center gap-3">
+                <Dock size={20} />
+                <p className="font-semibold text-xl underline">
+                  twitter feedback
+                </p>
+              </div>
+            </Link>
             <div className="flex items-center gap-2">
-              <Trash2 size={20} />
+              <button onClick={() => setDeleteModal(true)}>
+                <Trash2 size={20} />
+              </button>
               <FilePenLine size={20} />
             </div>
           </div>
@@ -55,6 +64,29 @@ const Analytics = () => {
           </div>
           <div>
             <p className="font-md text-sm">created_date: 12/7/2024</p>
+          </div>
+        </div>
+      )}
+      {deleteModal && (
+        <div className="top-0 left-0 fixed flex justify-center items-center bg-gray-500 bg-opacity-50 w-full h-full">
+          <div className="dark:bg-dark-secondary px-5 py-5">
+            <p className="text-lg dark:text-white">
+              are you sure you want to delete this project ⚠️
+            </p>
+            <div className="flex justify-center gap-4 mt-4">
+              <button
+                className="bg-accent-link hover:bg-red-600 mr-2 px-4 py-2 rounded-full text-white"
+                onClick={deleteHandler}
+              >
+                Yes
+              </button>
+              <button
+                className="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-full text-gray-800"
+                onClick={() => setDeleteModal(false)}
+              >
+                No
+              </button>
+            </div>
           </div>
         </div>
       )}
