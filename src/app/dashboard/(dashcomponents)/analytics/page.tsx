@@ -30,7 +30,7 @@ const Analytics = () => {
           <p>no feedback received yet? 🤔</p>
           <p>no worries! you can chill for a bit.</p>
           <p>
-            or if you haven't created any feedback forms yet?{" "}
+            or if you haven&apos;t created any feedback forms yet?{" "}
             <Link href="/dashboard/docs" className="text-accent-link">
               get started here.
             </Link>

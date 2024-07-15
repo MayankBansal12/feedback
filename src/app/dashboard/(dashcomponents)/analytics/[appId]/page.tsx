@@ -62,7 +62,7 @@ function ProjectInformation({
           <hr className="border-2 border-gray-400 rounded-full w-1/2" />
         </div>
         <div className="my-6">
-          <p className="text-lg">here's what people say about you 👇</p>
+          <p className="text-lg">here&apos;s what people say about you 👇</p>
         </div>
         <div className="px-4 py-2 border border-light-primary dark:border-light-primary rounded-lg w-full">
           <p>
@@ -71,7 +71,7 @@ function ProjectInformation({
               3 days ago
             </span>
           </p>
-          <p className="text-md italic">"Great app, I love it!"</p>
+          <p className="text-md italic">&quot;Great app, I love it!&quot;</p>
         </div>
       </div>
       {deleteModal && (
