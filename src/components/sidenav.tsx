@@ -17,7 +17,7 @@ export default function SideNav() {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-col bg-light-primary dark:bg-dark-primary w-full h-[calc(100vh-4rem)] justify-center text-black dark:text-white">
+    <div className="flex flex-col justify-center bg-light-primary dark:bg-dark-primary w-full h-[calc(100vh-4rem)] text-black dark:text-white">
       <div className="flex justify-center items-center">
         <div className="flex flex-col justify-center items-center gap-20">
           <div className="flex flex-col gap-2 w-full">
