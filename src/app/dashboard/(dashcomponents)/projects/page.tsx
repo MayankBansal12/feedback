@@ -27,10 +27,8 @@ const Projects = () => {
       </div>
       {projects.length === 0 ? (
         <div className="shadow-lg my-4 p-4 border border-light-primary dark:border-light-primary rounded-sm text-center">
-          <p>no feedback received yet? 🤔</p>
-          <p>no worries! you can chill for a bit.</p>
+          <p>you haven't created any projects yet 😕 </p>
           <p>
-            or if you haven&apos;t created any feedback forms yet?{" "}
             <Link href="/dashboard/docs" className="text-accent-link">
               get started here.
             </Link>
@@ -56,15 +54,14 @@ const Projects = () => {
               </div>
             </div>
             <div className="mb-2">
-              <p className="font-medium">total feedback received: 100</p>
-            </div>
-            <div className="mb-2">
               <p className="text-gray-700 dark:text-gray-300">
                 this is the description of the application.
               </p>
             </div>
             <div>
-              <p className="font-md text-sm">created_date: 12/7/2024</p>
+              <p className="text-right font-md text-sm">
+                created_date: 12/7/2024
+              </p>
             </div>
           </div>
         </div>
