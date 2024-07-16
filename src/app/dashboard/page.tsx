@@ -76,7 +76,7 @@ export default function Dash() {
         <p>
           Get the latest updates, and exclusive content delivered straight
           <br />
-          to your inbox. Don't miss out on the latest features.
+          to your inbox. Don&apos;t miss out on the latest features.
         </p>
         <input
           type="email"
