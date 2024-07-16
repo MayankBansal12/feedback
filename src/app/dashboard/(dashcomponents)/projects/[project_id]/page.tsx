@@ -7,7 +7,7 @@ function ProjectInformation({
   params,
 }: {
   params: {
-    appId: string;
+    project_id: string;
   };
 }) {
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
@@ -18,8 +18,9 @@ function ProjectInformation({
     <div className="flex flex-col dark:bg-dark-secondary px-10 py-10 w-full h-full dark:text-white">
       <div className="mb-4">
         <p>
-          Project info for <span className="font-semibold">{params.appId}</span>
-          . Please remove this after integration.
+          Project info for{" "}
+          <span className="font-semibold">{params.project_id}</span>. Please
+          remove this after integration.
         </p>
       </div>
       <div className="shadow-lg my-4 p-6 border border-light-primary dark:border-light-primary rounded-lg">
