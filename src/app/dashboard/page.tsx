@@ -72,7 +72,7 @@ export default function Dash() {
         onSubmit={handleSubmit}
         className="flex flex-col justify-center items-center gap-4 text-center"
       >
-        <h2 className="text-lg">Stay up-to-date with our newsletter</h2>
+        <h2 className="text-lg">Stay up-to-date with our newsletter 📩</h2>
         <p>
           Get the latest updates, and exclusive content delivered straight
           <br />
