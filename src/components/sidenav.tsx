@@ -6,13 +6,13 @@ import { usePathname } from "next/navigation";
 export default function SideNav() {
   const navLinks = [
     { name: "dash", link: "/dashboard" },
+    { name: "projects", link: "/dashboard/projects" },
     { name: "analytics", link: "/dashboard/analytics" },
-    { name: "create form", link: "/dashboard/create" },
+    //  { name: "create form", link: "/dashboard/create" },
     // { name: "post", link: "/dashboard/post_content" },
+    { name: "logs", link: "/dashboard/logs" },
     { name: "docs", link: "/dashboard/docs" },
-    { name: "notifications", link: "/dashboard/notifications" },
-    { name: "subscription", link: "/dashboard/subscription" },
-    { name: "profile", link: "/dashboard/profile" },
+    { name: "settings", link: "/dashboard/settings" },
   ];
   const pathname = usePathname();
 
