@@ -27,7 +27,7 @@ const Projects = () => {
       </div>
       {projects.length === 0 ? (
         <div className="shadow-lg my-4 p-4 border border-light-primary dark:border-light-primary rounded-sm text-center">
-          <p>you haven't created any projects yet 😕 </p>
+          <p>you haven&apos;t created any projects yet 😕 </p>
           <p>
             <Link href="/dashboard/docs" className="text-accent-link">
               get started here.
