@@ -16,7 +16,6 @@ const SideNav = () => {
     { name: "settings", link: "/dashboard/settings" },
   ];
   const pathname = usePathname();
-  const [isSideNavOpen, setIsSideNavOpen] = React.useState(false);
 
   return (
     <React.Fragment>
