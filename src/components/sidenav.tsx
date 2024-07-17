@@ -21,9 +21,9 @@ const SideNav = () => {
   return (
     <React.Fragment>
       <div className="flex flex-col justify-center bg-light-primary dark:bg-dark-primary w-full h-[calc(100vh-4rem)] text-black dark:text-white">
-        <div className="flex justify-center items-center text-center md:text-left">
+        <div className="flex justify-center items-center">
           <div className="flex flex-col justify-center items-center gap-10 md:gap-20">
-            <div className="flex flex-col gap-2 w-full">
+            <div className="flex flex-col gap-2 w-full text-center md:text-left">
               {navLinks.map((link, index) => {
                 const isActive = pathname.endsWith(link.link);
                 return (
