@@ -17,7 +17,7 @@ function ProjectInformation({
   return (
     <div className="flex flex-col dark:bg-dark-secondary px-10 py-10 w-full h-full dark:text-white">
       <div className="shadow-lg my-4 p-6 border border-light-primary dark:border-light-primary rounded-lg">
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-between items-center gap-2 mb-4">
           <div className="flex items-center gap-3">
             <Dock size={24} />
             <p className="font-semibold text-2xl underline">Twitter Feedback</p>
@@ -36,7 +36,7 @@ function ProjectInformation({
         </div>
         <div className="flex flex-wrap">
           <div className="flex justify-center items-center mb-4 px-4 sm:px-24 w-full sm:w-1/2">
-            <div className="bg-gradient-to-r from-[#86CAFC] to-[#33CA66] py-8 border border-light-primary dark:border-light-primary rounded-lg w-full text-white">
+            <div className="flex flex-col justify-center items-center bg-gradient-to-r from-[#86CAFC] to-[#33CA66] py-8 border border-light-primary dark:border-light-primary rounded-lg w-full h-full text-white">
               <p className="font-bold text-center text-xl">
                 100 users
                 <br /> have responded.
@@ -44,7 +44,7 @@ function ProjectInformation({
             </div>
           </div>
           <div className="flex justify-center items-center mb-4 px-4 sm:px-24 w-full sm:w-1/2">
-            <div className="bg-gradient-to-r from-[#F5B6F3] to-[#FF9292] py-8 border border-light-primary dark:border-light-primary rounded-lg w-full">
+            <div className="flex flex-col justify-center items-center bg-gradient-to-r from-[#F5B6F3] to-[#FF9292] py-8 border border-light-primary dark:border-light-primary rounded-lg w-full h-full">
               <p className="font-bold text-center text-white text-xl">
                 4.2 average
                 <br /> rating.

@@ -20,7 +20,7 @@ const Projects = () => {
         </p>
       </div>
       <div className="flex justify-center items-center my-4">
-        <hr className="border-2 dark:border-gray-400 border-light-primary rounded-full w-1/6" />
+        <hr className="border-2 dark:border-gray-400 border-light-primary rounded-full w-1/2 md:w-1/6" />
       </div>
       <div className="text-accent-link">
         <Link href="/dashboard/create/">+ create a new project.</Link>
@@ -35,7 +35,7 @@ const Projects = () => {
           </p>
         </div>
       ) : (
-        <div className="md:gap-5 lg:gap-10 md:grid grid-cols-2">
+        <div className="md:gap-5 lg:gap-10 grid md:grid-cols-2 xl:grid-cols-3">
           <div className="shadow-lg my-4 p-4 border border-light-primary dark:border-light-primary rounded-sm">
             <div className="flex justify-between items-center mb-4">
               <Link href="/dashboard/projects/project_id">
