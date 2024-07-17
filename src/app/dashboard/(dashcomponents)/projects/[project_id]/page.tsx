@@ -37,7 +37,7 @@ const Projects = () => {
           </p>
         </div>
       ) : (
-        <div className="md:gap-5 lg:gap-10 md:grid grid-cols-2">
+        <div className="md:gap-5 lg:gap-10 grid md:grid-cols-2 xl:grid-cols-3 my-2">
           <div className="shadow-lg my-4 p-4 border border-light-primary dark:border-light-primary rounded-sm">
             <div className="flex justify-between items-center mb-4">
               <Link href="/dashboard/projects/project_id/form_id">
