@@ -44,14 +44,18 @@ export default function RootLayout({
       >
         {isSideNavOpen && (
           <div
-            className={`w-full md:w-1/6 ${
+            className={`w-full  lg:w-1/6 ${
               !isMobile || isSideNavOpen ? "" : "hidden"
             }`}
           >
             <SideNav />
           </div>
         )}
-        <div className={`w-full ${isSideNavOpen ? "md:w-5/6" : "md:w-full"}`}>
+        <div
+          className={`w-full h-full ${
+            isSideNavOpen ? "md:w-5/6" : "md:w-full"
+          }`}
+        >
           {children}
         </div>
       </div>

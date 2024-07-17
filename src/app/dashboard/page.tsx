@@ -85,13 +85,13 @@ export default function Dash() {
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setEmail(e.target.value)
           }
-          className="bg-light-primary dark:bg-accent-darkinput px-4 py-1 border border-l-2 border-l-black dark:border-l-[#ffffff] w-2/3 text-md dark:text-white outline-none hover:outline focus:outline"
+          className="bg-light-primary dark:bg-accent-darkinput px-4 py-1 border border-l-2 border-l-black dark:border-l-[#ffffff] w-full md:w-2/3 text-md dark:text-white outline-none hover:outline focus:outline"
           required
         />
         <button
           type="submit"
           disabled={loading}
-          className="bg-accent-link hover:bg-accent-buttonhover my-2 px-4 p-1 rounded-full w-1/3 text-white transition-all"
+          className="bg-accent-link hover:bg-accent-buttonhover my-2 px-4 p-1 rounded-full w-1/3 w-fit text-white transition-all"
         >
           subscribe now!
         </button>
