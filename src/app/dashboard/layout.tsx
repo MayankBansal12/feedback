@@ -34,7 +34,7 @@ export default function RootLayout({
           <SideNav />
         </div>
         <div className="w-5/6 overflow-hidden">
-          {paths.length > 1 && <Breadcrumb className="bg-white dark:bg-dark-secondary pb-2 pt-4 px-10">
+          {paths.length > 1 && <Breadcrumb className="bg-white dark:bg-dark-secondary pt-6 px-10">
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink href={"/" + paths[0]}>{paths[0]}</BreadcrumbLink>
