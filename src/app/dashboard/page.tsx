@@ -13,7 +13,7 @@ export default function Dash() {
           <p>on your <span className="font-semibold">social</span> app.</p>
         </h2>
         <div className="flex w-3/4 justify-center gap-10">
-          <div className="bg-gradient-to-r from-[#86CAFC] to-[#33CA66] py-8 border border-light-primary dark:border-light-primary rounded-lg w-1/3 text-white">
+          <div className="bg-gradient-to-r from-[#86CAFC] to-[#33CA66] py-8 border border-light-primary dark:border-light-primary rounded-lg w-1/3">
             <p className="text-center flex flex-col gap-2">
               <span className="font-semibold text-lg">total feedback forms</span>
               <span className="font-bold text-2xl">5</span>
