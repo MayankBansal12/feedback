@@ -3,6 +3,19 @@
 import { Separator } from "@/components/ui/separator";
 import { Dock, FilePenLine, Trash2 } from "lucide-react";
 import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+
 
 function ProjectInformation({
   params,
@@ -12,6 +25,14 @@ function ProjectInformation({
   };
 }) {
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
+
+  const [name, setName] = useState("")
+  const [desc, setDesc] = useState("")
+
+  const editForm = () => {
+    console.log("edit:  name: ", name, " desc: ", desc)
+  }
+
   const deleteHandler = () => {
     // delete code
   };
@@ -29,10 +50,64 @@ function ProjectInformation({
             <p className="font-semibold text-2xl">twitter feedback</p>
           </div>
           <div className="flex items-center gap-3">
-            <button className="text-gray-600 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-500 transition-all" onClick={() => setDeleteModal(true)}>
-              delete
-            </button>
-            <button className="text-gray-600 hover:text-black dark:text-gray-300 dark:hover:text-white transition-all">edit</button>
+            <Dialog>
+              <DialogTrigger className="text-gray-600 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-500 transition-all">
+                delete
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>delete form</DialogTitle>
+                  <DialogDescription>
+                    are you sure you wanna delete the form?
+                    this will delete the form and all the feedbacks!
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <Button type="submit" className="bg-red-600 hover:bg-red-800 px-6 rounded-full text-white outline-none transition-all" onClick={deleteHandler}>delete</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+
+            <Dialog>
+              <DialogTrigger className="text-gray-600 hover:text-black dark:text-gray-300 dark:hover:text-white transition-all">
+                edit form
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>edit form</DialogTitle>
+                  <DialogDescription>
+                    edit form name and form heading here
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="name" className="text-right">
+                      form name
+                    </Label>
+                    <Input
+                      id="name"
+                      defaultValue={"new form"}
+                      className="col-span-3"
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="desc" className="text-right">
+                      form heading
+                    </Label>
+                    <Input
+                      id="desc"
+                      defaultValue={"form heading"}
+                      className="col-span-3"
+                      onChange={(e) => setDesc(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button type="submit" onClick={editForm} className="bg-accent-link hover:bg-accent-buttonhover transition-all py-1 px-4 rounded-full text-white">edit form</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
         <div className="mb-2 flex justify-between gap-4 items-center">
@@ -88,30 +163,6 @@ function ProjectInformation({
           </div>
         </div>
       </div>
-
-      {deleteModal && (
-        <div className="top-0 left-0 fixed flex justify-center items-center bg-gray-500 bg-opacity-50 w-full h-full">
-          <div className="bg-light-secondary dark:bg-dark-secondary px-5 py-5 rounded-lg">
-            <p className="text-lg dark:text-white">
-              are you sure you want to delete this form and all feedbacks?
-            </p>
-            <div className="flex justify-center gap-4 mt-4">
-              <button
-                className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white outline-none"
-                onClick={() => setDeleteModal(false)}
-              >
-                No
-              </button>
-              <button
-                className="bg-red-600 hover:bg-red-800 px-6 rounded-full text-white outline-none transition-all"
-                onClick={deleteHandler}
-              >
-                Yes
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
