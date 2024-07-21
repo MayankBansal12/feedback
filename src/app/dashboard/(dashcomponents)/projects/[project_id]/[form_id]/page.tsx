@@ -1,7 +1,7 @@
 /** @format */
 "use client";
 import { Separator } from "@/components/ui/separator";
-import { Dock, FilePenLine, Trash2 } from "lucide-react";
+import { Check, Copy, Dock, FilePenLine, Trash2 } from "lucide-react";
 import { useState } from "react";
 import {
   Dialog,
@@ -15,19 +15,32 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
-
+import Link from "next/link";
+import { usePathname } from 'next/navigation'
 
 function ProjectInformation({
   params,
 }: {
   params: {
-    project_id: string;
+    form_id: string;
   };
 }) {
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
-
   const [name, setName] = useState("")
   const [desc, setDesc] = useState("")
+  const [isCopied, setIsCopied] = useState(false)
+
+  const pathName = usePathname()
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(params.form_id)
+      setIsCopied(true)
+      setTimeout(() => setIsCopied(false), 3000)
+    } catch (error) {
+      console.error("error copying text: ", error)
+    }
+  }
 
   const editForm = () => {
     console.log("edit:  name: ", name, " desc: ", desc)
@@ -112,9 +125,26 @@ function ProjectInformation({
         </div>
         <div className="mb-2 flex justify-between gap-4 items-center">
           <p className="text-md">this is form heading</p>
-          <p className="text-sm text-gray-400">
-            created: 12-07-24
-          </p>
+          <div className="flex gap-4 items-center">
+            <div className="flex flex-col gap-1">
+              <p className="text-sm text-gray-400">form id:</p>
+              <div className="flex items-center h-6 gap-1">
+                <Input
+                  id="link"
+                  defaultValue={params.form_id}
+                  className="bg-light-primary h-full dark:bg-dark-primary opacity-75 border-none focus:ring-0 outline-none"
+                  readOnly
+                />
+                <Button onClick={handleCopy} size="sm" className="h-full px-2 bg-light-primary hover:bg-light-secondary dark:bg-dark-primary dark:hover:bg-dark-secondary transition-all">
+                  {isCopied ? <Check className="h-4 w-4 text-black dark:text-white" /> : <Copy className="h-4 w-4 text-black dark:text-white" />}
+                </Button>
+              </div>
+            </div>
+            <div className="flex flex-col gap-1">
+              <p className="text-sm text-gray-400">created on:</p>
+              <p className="font-semibold">12-07-24</p>
+            </div>
+          </div>
         </div>
         <Separator className="bg-dark-primary dark:bg-light-primary" />
 
@@ -136,11 +166,10 @@ function ProjectInformation({
         <div className="flex flex-col gap-4">
           <div className="flex gap-4 justify-between items-center">
             <p className="text-lg">latest feedbacks:</p>
-            <button className="bg-accent-link hover:bg-accent-buttonhover transition-all py-1 px-4 rounded-full text-white">see all feedbacks</button>
+            <Link href={pathName + "/feedback"} className="bg-accent-link hover:bg-accent-buttonhover transition-all py-1 px-4 rounded-full text-white">see all feedbacks</Link>
           </div>
 
           <div className="flex flex-col gap-2">
-
             <div className="px-4 py-2 border border-light-primary dark:border-light-primary rounded-lg w-full">
               <p>
                 a user rated 4 stars for your app_name.{" "}
