@@ -1,34 +1,138 @@
 /** @format */
 "use client";
-import { Dock, FilePenLine, Trash2 } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import { Dock, FilePenLine, Trash2, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
 
 const Projects = () => {
-  const [projects, setProjects] = useState([1]);
+  const [projects, setProjects] = useState([1, 1, 1]);
   const [editModal, setEditModal] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
+
+  const [name, setName] = useState("")
+  const [desc, setDesc] = useState("")
+
+  const fetchProjects = () => {
+    // fetch all projects related to that user
+  };
+
+  const createNewForm = () => {
+    console.log("name: ", name, " desc: ", desc)
+  }
+
+  const editForm = () => {
+    console.log("edit:  name: ", name, " desc: ", desc)
+  }
+
   const deleteHandler = () => {
     // delete code
   };
+
   return (
-    <div className="flex flex-col dark:bg-dark-secondary px-10 py-10 w-full h-full dark:text-white">
-      <div className="flex flex-col justify-start gap-3 my-4 w-full text-left">
-        <p className="text-xl">twitter_feedback 🚀</p>
-        <p className="text-md">
-          take a look at the feedbacks you received for this project .
-        </p>
+    <div className="flex flex-col w-full h-full dark:bg-dark-secondary dark:text-white px-10">
+      <div className="flex gap-4 justify-between items-center">
+        <h1 className="pt-1 pb-3 text-xl font-semibold">project forms</h1>
+        <div className="flex gap-4 items-center">
+          <Dialog>
+            <DialogTrigger className="text-gray-600 hover:text-black dark:text-gray-300 dark:hover:text-white transition-all">
+              edit project
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>edit project</DialogTitle>
+                <DialogDescription>
+                  edit project name and project description here
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    project name
+                  </Label>
+                  <Input
+                    id="name"
+                    defaultValue={"new project"}
+                    className="col-span-3"
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="desc" className="text-right">
+                    project desc
+                  </Label>
+                  <Input
+                    id="desc"
+                    defaultValue={"project desc"}
+                    className="col-span-3"
+                    onChange={(e) => setDesc(e.target.value)}
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button type="submit" onClick={editForm} className="bg-accent-link hover:bg-accent-buttonhover transition-all py-1 px-4 rounded-full text-white">edit project</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+          <Dialog>
+            <DialogTrigger className="bg-accent-link hover:bg-accent-buttonhover transition-all py-1 px-4 rounded-full text-white">
+              add new form
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>create new form</DialogTitle>
+                <DialogDescription>
+                  create new form and keep a track of all feedback with that.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    form name
+                  </Label>
+                  <Input
+                    id="name"
+                    placeholder="new form"
+                    className="col-span-3"
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="desc" className="text-right">
+                    form heading
+                  </Label>
+                  <Input
+                    id="desc"
+                    placeholder="form heading..."
+                    className="col-span-3"
+                    onChange={(e) => setDesc(e.target.value)}
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button type="submit" onClick={createNewForm} className="bg-accent-link hover:bg-accent-buttonhover transition-all py-1 px-4 rounded-full text-white">create new form</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
-      <div className="flex justify-center items-center my-4">
-        <hr className="border-2 dark:border-gray-400 border-light-primary rounded-full w-1/6" />
-      </div>
-      <div className="text-accent-link">
-        <Link href="/dashboard/create/">+ create a new feedback.</Link>
-      </div>
+
       {projects.length === 0 ? (
-        <div className="shadow-lg my-4 p-4 border border-light-primary dark:border-light-primary rounded-sm text-center">
-          <p>no feedback received yet? 🤔</p>
-          <p>no worries! you can chill for a bit.</p>
+        <div className="shadow-lg my-4 px-4 py-8 border border-light-primary dark:border-light-primary rounded-sm text-center">
+          <p>no feedback received yet?</p>
+          <p>no worries! we&apos;ll help you out!</p>
           <p>
             or if you haven&apos;t created any feedback forms yet?{" "}
             <Link href="/dashboard/docs" className="text-accent-link">
@@ -37,38 +141,39 @@ const Projects = () => {
           </p>
         </div>
       ) : (
-        <div className="md:gap-5 lg:gap-10 grid md:grid-cols-2 xl:grid-cols-3 my-2">
-          <div className="shadow-lg my-4 p-4 border border-light-primary dark:border-light-primary rounded-sm">
-            <div className="flex justify-between items-center mb-4">
-              <Link href="/dashboard/projects/project_id/form_id">
-                <div className="flex items-center gap-3">
-                  <Dock size={20} />
-                  <p className="font-semibold text-xl underline">
-                    feedback_form_1
+        <div className="md:gap-4 lg:gap-5 md:grid grid-cols-2">
+          {projects.map((_, i) => (
+            <Link href="/dashboard/projects/project_id/form_id" key={i}>
+              <div className="shadow-lg my-4 p-6 border border-light-primary rounded-sm hover:cursor-pointer hover:border-white transition-all">
+                <div className="flex justify-between items-center mb-2">
+                  <div className="flex items-center gap-3">
+                    <Dock size={20} />
+                    <p className="font-semibold text-xl">
+                      feedback form 1
+                    </p>
+                  </div>
+
+                  <ExternalLink />
+                </div>
+                <div className="my-2">
+                  <p className="text-gray-700 dark:text-gray-300">
+                    this is the form heading.
                   </p>
                 </div>
-              </Link>
-              <div className="flex items-center gap-2">
-                <button onClick={() => setDeleteModal(true)}>
-                  <Trash2 size={20} />
-                </button>
-                <FilePenLine size={20} />
+                <div className="mb-2 flex gap-2">
+                  <p className="font-medium">total feedback received: <span className="font-semibold">100</span></p>
+                  <Separator orientation="vertical" className="h-5 bg-black dark:bg-white" />
+                  <p>overall rating: <span className="font-semibold">4.3</span></p>
+                </div>
+
+                <div>
+                  <p className="text-right text-sm text-gray-400">
+                    created: 12-07-24
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="mb-2">
-              <p className="font-medium">total feedback received: 100</p>
-            </div>
-            <div className="mb-2">
-              <p className="text-gray-700 dark:text-gray-300">
-                this is the form heading.
-              </p>
-            </div>
-            <div>
-              <p className="text-right font-md text-sm">
-                created_date: 12/7/2024
-              </p>
-            </div>
-          </div>
+            </Link>
+          ))}
         </div>
       )}
       {deleteModal && (
