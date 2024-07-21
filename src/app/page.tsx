@@ -80,7 +80,7 @@ export default function Home() {
         <div className="flex flex-cols justify-center items-center bg-dark-primary mt-64 py-2 w-full">
           <div className="border-dark-primary mx-4 lg:mx-48 -mt-52 border rounded-xl w-full">
             <div className="bg-light-primary py-4 p-3 rounded-t-md text-black text-center text-xl md:text-3xl">
-              <p>here are the top 5 reasons to chose us ;)</p>
+              <p>here are the top 5 reasons to chose us ;&#41;</p>
             </div>
             <div className="space-y-4 bg-light-secondary px-4 lg:px-24 py-4 lg:py-20 rounded-b-md text-black text-md md:text-xl">
               <div className="flex">
@@ -141,7 +141,7 @@ export default function Home() {
                     <CarouselItem key={i}>
                       <div className="p-1">
                         <Card>
-                          <Image
+                          <img
                             src={item.src}
                             alt={item.name}
                             className="rounded-md"
