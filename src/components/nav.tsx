@@ -5,16 +5,21 @@ import icon from "../asset/icon.svg";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useUserStore } from "@/global-store/store";
+import { usePathname } from "next/navigation";
 
 export default function Nav() {
   const [darkMode, setDarkMode] = useState(true);
+  const path = usePathname()
   const { user } = useUserStore()
+  const [isDashboard, setIsDashboard] = useState(false)
 
   useEffect(() => {
     const theme = localStorage.getItem("theme");
     if (theme === "dark") {
       setDarkMode(true);
     }
+    const isDash = path.startsWith("/dashboard");
+    setIsDashboard(isDash)
   }, []);
 
   useEffect(() => {
@@ -24,17 +29,18 @@ export default function Nav() {
 
   return (
     <div className="flex justify-between items-center bg-white dark:bg-dark-primary shadow-md px-4 lg:px-24 h-16 dark:text-white">
-      <div className="flex items-center">
+      <div className="flex lg:flex items-center hidden">
         <Image src={icon} alt="logo" height={40} width={40} />
       </div>
-      <div className="font-black text-2xl">
+      <div className="lg:m-0 ml-10 font-black text-lg md:text-2xl">
         <span>feedback.</span>
       </div>
       <div className="flex items-center gap-5">
         <div className="flex gap-3 dark:border-dark-secondary border border-light-primary rounded-full overflow-hidden">
           <span
-            className={`transition-colors duration-300 p-1 rounded-full cursor-pointer ${!darkMode ? "bg-light-primary" : ""
-              }`}
+            className={`transition-colors duration-300 p-1 rounded-full cursor-pointer ${
+              !darkMode ? "bg-light-primary" : ""
+            }`}
             onClick={() => setDarkMode(false)}
           >
             <svg
@@ -53,8 +59,9 @@ export default function Nav() {
             </svg>
           </span>
           <span
-            className={`transition-colors duration-300 p-1 rounded-full cursor-pointer ${darkMode ? "bg-dark-secondary" : ""
-              }`}
+            className={`transition-colors duration-300 p-1 rounded-full cursor-pointer ${
+              darkMode ? "bg-dark-secondary" : ""
+            }`}
             onClick={() => setDarkMode(true)}
           >
             <svg
@@ -74,7 +81,9 @@ export default function Nav() {
           </span>
         </div>
         <span className="hover:underline hover:underline-offset-4">
-          {user ? <Link href="/dashboard">dashboard</Link> : <Link href="/auth?login=true">login</Link>}
+          {
+            isDashboard ? <Link href="/dashboard/newsletter">join newsletter</Link> :
+              user ? <Link href="/dashboard">dashboard</Link> : <Link href="/auth?login=true">login</Link>}
         </span>
       </div>
     </div>

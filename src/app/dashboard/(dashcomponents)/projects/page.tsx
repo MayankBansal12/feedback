@@ -1,0 +1,127 @@
+/** @format */
+"use client";
+import { Dock, ExternalLink } from "lucide-react";
+import Link from "next/link";
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+
+const Projects = () => {
+  const [projects, setProjects] = useState([1, 1, 1]);
+  const [name, setName] = useState("")
+  const [desc, setDesc] = useState("")
+
+  const fetchProjects = () => {
+    // fetch all projects related to that user
+  };
+
+  const createNewProject = () => {
+    console.log("name: ", name, " desc: ", desc)
+  }
+
+  return (
+    <div className="flex flex-col w-full h-full dark:bg-dark-secondary dark:text-white px-10">
+      <div className="flex gap-4 justify-between items-center">
+        <h1 className="pt-1 pb-3 text-xl font-semibold">projects</h1>
+        <div className="flex gap-4 items-center">
+          <p>total: <span className="font-semibold">{projects.length}</span></p>
+          <Dialog>
+            <DialogTrigger className="bg-accent-link hover:bg-accent-buttonhover transition-all py-1 px-4 rounded-full text-white">
+              create new
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>create new project</DialogTitle>
+                <DialogDescription>
+                  create new project and organize all your forms and feedbacks with that.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    project name
+                  </Label>
+                  <Input
+                    id="name"
+                    placeholder="new project"
+                    className="col-span-3"
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="desc" className="text-right">
+                    project desc
+                  </Label>
+                  <Input
+                    id="desc"
+                    placeholder="project description..."
+                    className="col-span-3"
+                    onChange={(e) => setDesc(e.target.value)}
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button type="submit" onClick={createNewProject} className="bg-accent-link hover:bg-accent-buttonhover transition-all py-1 px-4 rounded-full text-white">create new project</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
+      </div>
+
+      <div className="flex flex-col overflow-auto mt-2 pb-10 px-2">
+        {projects.length === 0 ? (
+          <div className="shadow-lg my-4 px-4 py-8 border border-light-primary dark:border-light-primary rounded-sm text-center">
+            <p>you haven&apos;t created any projects yet :&#40;&#40; </p>
+            <p>
+              <Link href="/dashboard/docs" className="text-accent-link">
+                get started here.
+              </Link>
+            </p>
+          </div>
+        ) : (
+          <div className="md:gap-4 lg:gap-5 md:grid grid-cols-2">
+            {projects.map((_, i) => (
+              <Link href="/dashboard/projects/project_id" key={i}>
+                <div className="shadow-lg my-4 p-6 border border-light-primary rounded-sm hover:cursor-pointer hover:border-white transition-all">
+                  <div className="flex justify-between items-center mb-2">
+                    <div className="flex items-center gap-3">
+                      <Dock size={20} />
+                      <p className="font-semibold text-xl">
+                        twitter feedback
+                      </p>
+                    </div>
+
+                    <ExternalLink />
+
+                  </div>
+                  <div className="mb-2">
+                    <p className="text-gray-700 dark:text-gray-300">
+                      this is the description of the application.
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-right text-sm text-gray-400">
+                      created: 12-07-24
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Projects;

@@ -1,82 +1,33 @@
-"use client"
+/** @format */
 
-import { useToast } from "@/components/ui/use-toast";
-import { ChangeEvent, FormEvent, useState } from "react";
+"use client";
 
 export default function Dash() {
-    const { toast } = useToast()
-    const [email, setEmail] = useState("")
-    const [loading, setIsLoading] = useState(false)
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        console.log("email: ", email)
-
-        if (!email) {
-            toast({
-                title: "oops! email is required",
-                description: "please enter correct email!",
-            })
-            return;
-        }
-        setIsLoading(true)
-
-        try {
-            const response = await fetch("/api/email-contact", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email }),
-            });
-
-            if (response.ok) {
-                toast({
-                    title: "thanks! you are added to waitlist!",
-                    description: "keep an eye up on your email while we work to get it done quickly",
-                })
-            } else {
-                const errorData = await response.json();
-                console.error("Error:", errorData);
-
-                toast({
-                    variant: "destructive",
-                    title: "caught up with an error",
-                    description: errorData.message.toLowerCase(),
-                })
-            }
-        } catch (error) {
-            console.log("error: ", error)
-            toast({
-                variant: "destructive",
-                title: "caught up with an error",
-                description: "Error adding you to waitlist, try again!",
-            })
-        } finally {
-            setIsLoading(false)
-        }
-    }
-
-    return <div className="flex flex-col justify-center items-center gap-4 dark:bg-dark-secondary px-10 py-10 w-full h-full dark:text-white">
-        <h2 className="text-lg text-center">
-            <span className="font-bold">feedback.</span> an easy way for collecting and managing user feedback and reviews.
-            <br />
-            going live next week.
+  return (
+    <div className="flex flex-col w-full h-full dark:bg-dark-secondary dark:text-white px-10">
+      <h1 className="py-10 text-xl font-semibold">dashboard</h1>
+      <div className="flex flex-col justify-center items-center gap-8 h-2/3">
+        <h2 className="text-center text-xl">
+          <p>this week you had <span className="font-semibold">1000</span> feedbacks</p>
+          <p>on your <span className="font-semibold">social</span> app.</p>
         </h2>
-
-        <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center gap-4">
-            <h2 className="text-xl">
-                join waitlist to be the first one to try it out!
-            </h2>
-            <input
-                type="email"
-                placeholder="email"
-                value={email}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-                className="bg-light-primary dark:bg-accent-darkinput px-4 py-1 w-2/3 border border-l-2 border-l-black dark:border-l-[#ffffff] text-md dark:text-white outline-none hover:outline focus:outline"
-                required
-            />
-            <button type="submit" disabled={loading} className="bg-accent-link hover:bg-accent-buttonhover transition-all p-1 px-4 my-2 w-1/3 rounded-full text-white">join now!</button>
-        </form>
-    </div >
+        <div className="flex w-3/4 justify-center gap-10">
+          <div className="bg-gradient-to-r from-[#86CAFC] to-[#33CA66] py-8 border border-light-primary dark:border-light-primary rounded-lg w-1/3">
+            <p className="text-center flex flex-col gap-2">
+              <span className="font-semibold text-lg">total feedback forms</span>
+              <span className="font-bold text-2xl">5</span>
+            </p>
+          </div>
+          <div className="bg-gradient-to-r from-[#F5B6F3] to-[#FF9292] py-8 border border-light-primary dark:border-light-primary rounded-lg w-1/3">
+            <p className="text-center flex flex-col gap-2">
+              <span className="font-semibold text-lg">average overall rating</span>
+              <span className="font-bold text-2xl">4.2</span>
+            </p>
+          </div>
+        </div>
+        <p className="text-slate-400">more metrics coming soon...</p>
+      </div>
+    </div>
+  );
 }
