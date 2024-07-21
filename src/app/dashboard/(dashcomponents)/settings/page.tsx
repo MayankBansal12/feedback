@@ -151,7 +151,7 @@ const Settings = () => {
             <CardHeader>
               <CardTitle>edit profile</CardTitle>
               <CardDescription>
-                make changes to your account here. click save when you're done.
+                make changes to your account here. click save when you&apos;re done.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
