@@ -132,7 +132,7 @@ const Projects = () => {
       {projects.length === 0 ? (
         <div className="shadow-lg my-4 px-4 py-8 border border-light-primary dark:border-light-primary rounded-sm text-center">
           <p>no feedback received yet?</p>
-          <p>no worries! we'll help you out!</p>
+          <p>no worries! we&apos;ll help you out!</p>
           <p>
             or if you haven&apos;t created any feedback forms yet?{" "}
             <Link href="/dashboard/docs" className="text-accent-link">

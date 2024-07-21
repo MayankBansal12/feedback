@@ -13,6 +13,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const assets = [
   {
@@ -140,7 +141,7 @@ export default function Home() {
                     <CarouselItem key={i}>
                       <div className="p-1">
                         <Card>
-                          <img
+                          <Image
                             src={item.src}
                             alt={item.name}
                             className="rounded-md"

@@ -66,7 +66,7 @@ export default function Newsletter() {
             >
                 <h2 className="text-lg">stay up-to-date with product update</h2>
                 <p>
-                    we'll send only one email each month (sometimes not even that, considering how lazy we are!)
+                    we&apos;ll send only one email each month (sometimes not even that, considering how lazy we are!)
                     <br />
                     <span>signup using your email below</span>
                 </p>
