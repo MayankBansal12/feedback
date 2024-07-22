@@ -1,0 +1,133 @@
+# api references
+
+understand general concepts, response codes, authentication and references for using feedback apis
+
+### base url
+
+the feedback api is built on rest principles. we enforce https in every request to improve security and privacy.
+all requests contain the following base url:
+
+```text copy
+https://feedback-easy.vercel.app/api/v1
+```
+
+### authentication
+
+to authenticate you need to add `clientId` and `clientSecret` header with the contents of the header that you can get from [settings/secrets](/dashboard/settings?tab=secrets).
+
+```text copy
+clientId: 639a-73b...
+clientSecret: $2ab3hg24....
+```
+
+### endpoints
+
+endpoint for interacting with feedback apis:-
+
+#### **collecting a feedback**- `/api/v1/record`
+
+for collecting feedback, you can make a _post_ request to `/api/v1/record` with authentication header and request body format.<br />
+the text (string) and rating (number) are optional and the record will be stored
+in form which can be easily manage on dashboard.
+
+##### request body format:-
+
+```json copy
+{
+  "formId": "78346455", // type: string, required: true
+  "text": "", // type: string, required: false
+  "rating": 5 // type: number(1-5), required: false
+}
+```
+
+##### curl request format:
+
+```curl copy
+curl --location 'https://feedback-easy.vercel.app/api/v1/record'
+--header 'clientId: {{"YOUR_CLIENT_ID"}}'
+--header 'clientSecret: {{"YOUR_CLIENT_SECRET"}}'
+--header 'Content-Type: application/json'
+--data '{
+  "formId":{{"YOUR_FORM_ID"}},
+  "text":"TEXT(optional)",
+  "rating":"RATING(optional)",
+}'
+```
+
+##### request example in javascript:-
+
+```js copy
+const baseurl = "https://feedback-easy.vercel.app/api/v1";
+const endpoint = "/record";
+
+const formId = "63544565683"; // your form id
+// request body containing text and rating details
+const reqBody = { formId: formId, text: "test feedback", rating: 5 };
+
+// make the post request
+try {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      clientId: clientId,
+      clientSecret: clientSecret,
+    },
+    body: JSON.stringify(requestBody),
+  });
+
+  // Check if the response is successful
+  if (!response.ok) {
+    throw new Error("response was not ok! " + response.statusText);
+  }
+
+  // Parse the JSON response
+  const data = await response.json();
+  console.log("request success:", data);
+} catch (error) {
+  console.error("error: ", error);
+}
+```
+
+<br />
+**note:- working on more endpoints for reading records, crud for project & form...feel
+free to reach out for requesting more endpoints.**
+
+### response codes
+
+basic HTTP codes 200, 400, 500 have been used to represent success or failures of your requests.
+
+- `200` - HTTP code for representing request success
+- `400` - HTTP code representing request failure
+- `500` - HTTP code representing infrastructure issues
+
+### response formats
+
+the response formats may vary for different request endpoint, but a general format has been used for both success or failure cases
+
+#### success request format
+
+```json copy
+{
+  "success": true,
+  "status": 200,
+  "message": "request success!",
+  "data": {}
+}
+```
+
+note:- data is an object containing the results varying upon the different endpoints
+
+#### failure request format
+
+```json copy
+{
+  "success": false,
+  "status": 400,
+  "message": "request fail, invalid secret key!"
+}
+```
+
+### rate limit
+
+feedback apis are free to use and there are no rate limit for now. however, certain checks have been implemented to protect from abuse. in case of trouble, reach out to us for help.

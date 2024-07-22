@@ -3,5 +3,11 @@
         "title": "docs",
         "type": "page",
         "display": "hidden"
+    },
+    "feedback": {
+        "title": "<- back to feedback",
+        "type": "page",
+        "href": "/",
+        "newWindow": true
     }
 }
