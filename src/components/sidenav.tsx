@@ -12,7 +12,7 @@ const SideNav = () => {
     //  { name: "create form", link: "/dashboard/create" },
     // { name: "post", link: "/dashboard/post_content" },
     { name: "logs", link: "/dashboard/logs" },
-    { name: "docs", link: "/dashboard/docs" },
+    { name: "get started", link: "/dashboard/get-started" },
     { name: "settings", link: "/dashboard/settings" },
   ];
   const pathname = usePathname();
@@ -45,7 +45,7 @@ const SideNav = () => {
               <br />
               everything is
               <br />
-              safe. ^-^
+              safe with us. ^-^
             </div>
           </div>
         </div>

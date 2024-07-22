@@ -56,7 +56,7 @@ function ProjectInformation({
         <h1 className="pt-1 pb-3 text-xl font-semibold">feedback form</h1>
       </div>
 
-      <div className="flex flex-col gap-4 shadow-lg my-6 p-6 border border-light-primary dark:border-light-primary rounded-lg">
+      <div className="flex flex-col gap-4 shadow-lg my-2 p-6 border border-light-primary dark:border-light-primary rounded-lg">
         <div className="flex justify-between items-center gap-4">
           <div className="flex items-center gap-3">
             <Dock size={24} />
@@ -128,11 +128,11 @@ function ProjectInformation({
           <div className="flex gap-4 items-center">
             <div className="flex flex-col gap-1">
               <p className="text-sm text-gray-400">form id:</p>
-              <div className="flex items-center h-6 gap-1">
+              <div className="flex items-center h-7 gap-1">
                 <Input
                   id="link"
                   defaultValue={params.form_id}
-                  className="bg-light-primary h-full dark:bg-dark-primary opacity-75 border-none focus:ring-0 outline-none"
+                  className="bg-light-primary h-full dark:bg-dark-primary opacity-75 text-md"
                   readOnly
                 />
                 <Button onClick={handleCopy} size="sm" className="h-full px-2 bg-light-primary hover:bg-light-secondary dark:bg-dark-primary dark:hover:bg-dark-secondary transition-all">
@@ -142,7 +142,7 @@ function ProjectInformation({
             </div>
             <div className="flex flex-col gap-1">
               <p className="text-sm text-gray-400">created on:</p>
-              <p className="font-semibold">12-07-24</p>
+              <p className="font-semibold mt-1">12-07-24</p>
             </div>
           </div>
         </div>
