@@ -83,7 +83,7 @@ const Projects = () => {
           <div className="shadow-lg my-4 px-4 py-8 border border-light-primary dark:border-light-primary rounded-sm text-center">
             <p>you haven&apos;t created any projects yet :&#40;&#40; </p>
             <p>
-              <Link href="/dashboard/docs" className="text-accent-link">
+              <Link href="/dashboard/get-started" className="text-accent-link">
                 get started here.
               </Link>
             </p>
