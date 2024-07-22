@@ -24,7 +24,7 @@ const SideNav = () => {
           <div className="flex flex-col justify-center items-center gap-10 md:gap-20">
             <div className="flex flex-col gap-2 w-full text-center md:text-left">
               {navLinks.map((link, index) => {
-                const isActive = pathname.endsWith(link.link);
+                const isActive = pathname?.endsWith(link.link);
                 return (
                   <Link
                     key={index}

@@ -108,7 +108,7 @@ const AuthComponent = () => {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const { toast } = useToast()
-  const loginParam = params.get("login")
+  const loginParam = params?.get("login")
 
   useEffect(() => {
     setIsLogin(loginParam === "true" || false)
