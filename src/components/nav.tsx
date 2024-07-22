@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useUserStore } from "@/global-store/store";
 import { usePathname } from "next/navigation";
+import { ArrowUpRight } from "lucide-react";
 
 export default function Nav() {
   const [darkMode, setDarkMode] = useState(true);
@@ -78,6 +79,9 @@ export default function Nav() {
             </svg>
           </span>
         </div>
+        <span className="hover:underline hover:underline-offset-4">
+          <Link href="/docs/welcome" className="flex">docs <ArrowUpRight /></Link>
+        </span>
         <span className="hover:underline hover:underline-offset-4">
           {
             isDashboard ? <Link href="/dashboard/newsletter">join newsletter</Link> :

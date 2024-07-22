@@ -16,7 +16,7 @@ const GetStarted = () => {
           <span className="opacity-70">
             simple guide for getting started. for apis documentation, refer to {"  "}
           </span>
-          <Link href="/docs" className="dark:text-white opacity-85 hover:opacity-100 transition-all flex">docs <ArrowUpRight /></Link>
+          <Link href="/docs/welcome" className="dark:text-white opacity-85 hover:opacity-100 transition-all flex">docs <ArrowUpRight /></Link>
         </p>
         <h2 className="pt-4 pb-2 font-bold text-lg">simple steps for getting started:</h2>
         <div>
@@ -53,7 +53,7 @@ const GetStarted = () => {
         <div>
           <p className="font-bold text-lg">4. use feedback docs and store your user&apos;s feedback with ease</p>
           <p className="px-4 py-2">
-            check the <Link href="/docs" className="text-accent-link hover:text-accent-buttonhover transition-all">feedback docs</Link> for using feedback apis. you will need client id and client secret for authentication, along with form id for collecting feedback inside one form and later managing all inside <Link href="/dashboard" className="text-accent-link hover:text-accent-buttonhover transition-all">dashboard</Link>
+            check the <Link href="/docs/welcome" className="text-accent-link hover:text-accent-buttonhover transition-all">feedback docs</Link> for using feedback apis. you will need client id and client secret for authentication, along with form id for collecting feedback inside one form and later managing all inside <Link href="/dashboard" className="text-accent-link hover:text-accent-buttonhover transition-all">dashboard</Link>
           </p>
         </div>
         <div>

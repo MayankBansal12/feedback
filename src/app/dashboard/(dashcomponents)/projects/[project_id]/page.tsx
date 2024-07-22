@@ -135,7 +135,7 @@ const Projects = () => {
           <p>no worries! we&apos;ll help you out!</p>
           <p>
             or if you haven&apos;t created any feedback forms yet?{" "}
-            <Link href="/dashboard/docs" className="text-accent-link">
+            <Link href="/dashboard/projects" className="text-accent-link">
               get started here.
             </Link>
           </p>
