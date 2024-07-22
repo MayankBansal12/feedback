@@ -18,7 +18,7 @@ export default function Nav() {
     if (theme === "dark") {
       setDarkMode(true);
     }
-    const isDash = path.startsWith("/dashboard");
+    const isDash = path != null ? path.startsWith("/dashboard") : false;
     setIsDashboard(isDash)
   }, []);
 
@@ -38,9 +38,8 @@ export default function Nav() {
       <div className="flex items-center gap-5">
         <div className="flex gap-3 dark:border-dark-secondary border border-light-primary rounded-full overflow-hidden">
           <span
-            className={`transition-colors duration-300 p-1 rounded-full cursor-pointer ${
-              !darkMode ? "bg-light-primary" : ""
-            }`}
+            className={`transition-colors duration-300 p-1 rounded-full cursor-pointer ${!darkMode ? "bg-light-primary" : ""
+              }`}
             onClick={() => setDarkMode(false)}
           >
             <svg
@@ -59,9 +58,8 @@ export default function Nav() {
             </svg>
           </span>
           <span
-            className={`transition-colors duration-300 p-1 rounded-full cursor-pointer ${
-              darkMode ? "bg-dark-secondary" : ""
-            }`}
+            className={`transition-colors duration-300 p-1 rounded-full cursor-pointer ${darkMode ? "bg-dark-secondary" : ""
+              }`}
             onClick={() => setDarkMode(true)}
           >
             <svg

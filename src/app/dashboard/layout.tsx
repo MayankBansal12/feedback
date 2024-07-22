@@ -31,7 +31,8 @@ export default function RootLayout({
   const [paths, setPaths] = useState<string[]>([])
 
   useEffect(() => {
-    setPaths(path.split("/").slice(1))
+    if (path != null)
+      setPaths(path.split("/").slice(1))
   }, [path])
 
 

@@ -11,7 +11,7 @@ const PasswordComponent = () => {
     const { toast } = useToast()
     const router = useRouter()
     const params = useSearchParams()
-    const token = params.get("token")
+    const token = params?.get("token")
 
     useEffect(() => {
         if (!token) {

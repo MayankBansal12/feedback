@@ -51,7 +51,7 @@ const GetStarted = () => {
           </p>
         </div>
         <div>
-          <p className="font-bold text-lg">4. use feedback docs and store your user's feedback with ease</p>
+          <p className="font-bold text-lg">4. use feedback docs and store your user&apos;s feedback with ease</p>
           <p className="px-4 py-2">
             check the <Link href="/docs" className="text-accent-link hover:text-accent-buttonhover transition-all">feedback docs</Link> for using feedback apis. you will need client id and client secret for authentication, along with form id for collecting feedback inside one form and later managing all inside <Link href="/dashboard" className="text-accent-link hover:text-accent-buttonhover transition-all">dashboard</Link>
           </p>
