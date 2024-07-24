@@ -1,7 +1,7 @@
 /** @format */
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -30,6 +30,10 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 import { Check, Copy, Eye, EyeOff } from "lucide-react";
+import { useUserStore } from "@/global-store/store";
+import { useToast } from "@/components/ui/use-toast";
+import { useSearchParams } from "next/navigation";
+import useApi from "@/helpers/useApi";
 
 const chartData = [
   { month: "January", feedback: 186 },
@@ -51,19 +55,51 @@ const chartConfig = {
 } satisfies ChartConfig
 
 const Settings = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [showSecret, setShowSecret] = useState(false);
+  const [name, setName] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [showSecret, setShowSecret] = useState(false)
   const [isCopied, setIsCopied] = useState("false")
+  const { user } = useUserStore()
+  const { toast } = useToast()
+  const params = useSearchParams()
+  const tabParam = params?.get("tab")
+  const callApi = useApi()
 
-  const saveHandler = async () => {
-    console.log("name: ", name);
-  };
-
-  const deleteAccountHandler = async () => { };
+  useEffect(() => {
+    setName(user?.name.toLowerCase() ?? "")
+  }, [user])
 
   const saveProfile = async () => {
+    try {
+      if (!name) {
+        toast({
+          title: "oops! name can't be empty!",
+          description: "fill up the name and try again!!",
+        })
+      }
+      setLoading(true)
+      const res = await callApi("/me", "PUT", { name })
+      console.log("profile updated! ", res)
+
+      if (res.data.success) {
+        toast({
+          title: "profile updated!",
+          description: res.data.message.toLowerCase(),
+        })
+      } else {
+        toast({
+          title: "oops! couldn't update!",
+          description: res.data.message.toLowerCase(),
+        })
+      }
+    } catch (error: any) {
+      toast({
+        title: "oops! couldn't update!",
+        description: error.response.data.message.toLowerCase() || "refresh and try again!",
+      })
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleCopy = async (text: string, type: string) => {
@@ -82,7 +118,7 @@ const Settings = () => {
         <h1 className="pt-1 pb-3 text-xl font-semibold">settings</h1>
       </div>
 
-      <Tabs defaultValue="usage" className="w-full">
+      <Tabs defaultValue={tabParam ?? "usage"} className="w-full">
         <TabsList className="grid w-1/3 grid-cols-3 bg-transparent">
           <TabsTrigger value="usage">usage</TabsTrigger>
           <TabsTrigger value="secrets">secrets</TabsTrigger>
@@ -121,8 +157,8 @@ const Settings = () => {
               <div className="space-y-1">
                 <Label htmlFor="clientId">client id</Label>
                 <div className="flex gap-1 items-center">
-                  <Input id="clientId" defaultValue={"bg233rfbgfkjfh3f"} className="w-1/2" readOnly disabled />
-                  <Button onClick={() => handleCopy("bg233rfbgfkjfh3f", "clientId")} className="h-full px-2 bg-light-primary hover:bg-light-secondary dark:bg-dark-primary dark:hover:bg-dark-secondary transition-all">
+                  <Input id="clientId" defaultValue={user?.userId ?? ""} className="w-1/2" readOnly disabled />
+                  <Button onClick={() => handleCopy(user?.userId ?? "", "clientId")} className="h-full px-2 bg-light-primary hover:bg-light-secondary dark:bg-dark-primary dark:hover:bg-dark-secondary transition-all">
                     {isCopied === "clientId" ? <Check className="text-black dark:text-white" /> : <Copy className="text-black dark:text-white" />}
                   </Button>
                 </div>
@@ -130,11 +166,11 @@ const Settings = () => {
               <div className="space-y-1">
                 <Label htmlFor="clientSecret">client secret</Label>
                 <div className="flex gap-1 items-center">
-                  <Input id="clientSecret" value={showSecret ? "jewlqtj23r709wh8ft94043" : "ey**************"} className="w-1/2" readOnly disabled />
+                  <Input id="clientSecret" value={showSecret ? user?.clientSecret ?? "" : "$2a$**************"} className="w-1/2" readOnly disabled />
                   <Button onClick={() => setShowSecret(!showSecret)} className="h-full px-2 bg-light-primary hover:bg-light-secondary dark:bg-dark-primary dark:hover:bg-dark-secondary transition-all">
                     {showSecret ? <Eye className="text-black dark:text-white" /> : <EyeOff className="text-black dark:text-white" />}
                   </Button>
-                  <Button onClick={() => handleCopy("jewlqtj23r709wh8ft94043", "clientSecret")} className="h-full px-2 bg-light-primary hover:bg-light-secondary dark:bg-dark-primary dark:hover:bg-dark-secondary transition-all">
+                  <Button onClick={() => handleCopy(user?.clientSecret ?? "", "clientSecret")} className="h-full px-2 bg-light-primary hover:bg-light-secondary dark:bg-dark-primary dark:hover:bg-dark-secondary transition-all">
                     {isCopied === "clientSecret" ? <Check className="text-black dark:text-white" /> : <Copy className="text-black dark:text-white" />}
                   </Button>
                 </div>
@@ -157,15 +193,15 @@ const Settings = () => {
             <CardContent className="space-y-2">
               <div className="space-y-1">
                 <Label htmlFor="name">name</Label>
-                <Input id="name" defaultValue="Pedro Duarte" className="w-1/2" />
+                <Input id="name" defaultValue="name eg:- mayank" value={name} onChange={(e) => setName(e.target.value)} className="w-1/2" />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="email">email</Label>
-                <Input id="email" defaultValue="user@gmail.com" className="w-1/2" readOnly disabled />
+                <Input id="email" defaultValue={user?.email ?? ""} className="w-1/2" readOnly disabled />
               </div>
             </CardContent>
             <CardFooter>
-              <Button onClick={saveProfile} className="bg-accent-link hover:bg-accent-buttonhover transition-all py-1 px-4 rounded-full text-white">save changes</Button>
+              <Button onClick={saveProfile} disabled={loading} className="bg-accent-link hover:bg-accent-buttonhover transition-all py-1 px-4 rounded-full text-white">save changes</Button>
             </CardFooter>
           </Card>
         </TabsContent>

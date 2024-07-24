@@ -24,8 +24,10 @@ export interface RegisterFormProps {
 
 
 export interface UserType {
-    _id: number
+    userId: string
     name: string
     email: string
     isVerified: boolean
+    clientSecret: string
+    createdDate: Date
 }
