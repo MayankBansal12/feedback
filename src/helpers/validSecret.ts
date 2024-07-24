@@ -24,7 +24,10 @@ export default async function isSecretValid(request: Request): Promise<ApiRespon
             return { success: false, status: 400, message: 'Error authenticating the user!' }
         }
         const isSecretMatch = await bcrypt.compare(user.clientSecret, clientSecret);
-        return { success: isSecretMatch, status: 200, message: isSecretMatch ? 'Request authenticated!' : 'Invalid secret key!' }
+        if (!isSecretMatch) {
+            return { success: false, status: 400, message: "Invalid secret key!" }
+        }
+        return { success: isSecretMatch, status: 200, message: "Request authenticated!" }
     } catch (error) {
         if (error instanceof z.ZodError) {
             return { success: false, status: 400, message: error.errors[0].message };

@@ -79,12 +79,12 @@ export default function Nav() {
             </svg>
           </span>
         </div>
-        <span className="hover:underline hover:underline-offset-4">
+        <span className="hover:underline hover:underline-offset-4 transition-all">
           <Link href="/docs/welcome" className="flex">docs <ArrowUpRight /></Link>
         </span>
-        <span className="hover:underline hover:underline-offset-4">
+        <span className="hover:underline hover:underline-offset-4 transition-all">
           {
-            isDashboard ? <Link href="/dashboard/newsletter">join newsletter</Link> :
+            isDashboard ? <Link href="/dashboard/newsletter">newsletter</Link> :
               user ? <Link href="/dashboard">dashboard</Link> : <Link href="/auth?login=true">login</Link>}
         </span>
       </div>

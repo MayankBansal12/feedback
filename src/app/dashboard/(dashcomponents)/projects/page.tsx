@@ -15,19 +15,57 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import useApi from "@/helpers/useApi";
+import { useUserStore } from "@/global-store/store";
+import { useToast } from "@/components/ui/use-toast";
 
 const Projects = () => {
-  const [projects, setProjects] = useState([1, 1, 1]);
+  const [projects, setProjects] = useState([]);
+  const { user } = useUserStore()
   const [name, setName] = useState("")
   const [desc, setDesc] = useState("")
+  const callApi = useApi()
+  const { toast } = useToast()
 
-  const fetchProjects = () => {
+  const createNewProject = async () => {
+    if (!name) {
+      toast({
+        title: "name can't be empty!",
+        description: "give your project a name and try again!",
+      })
+      return;
+    }
+    if (!user) {
+      toast({
+        title: "oops! couldn't create new project",
+        description: "refresh and try again!",
+      })
+      return;
+    }
     // fetch all projects related to that user
+    try {
+      const res = await callApi("/v1/project", "POST", { name, desc }, user.userId, user.clientSecret)
+      console.log("new project creaetd:", res)
+      if (res.data.success) {
+        toast({
+          title: "project created!",
+          description: res.data.message.toLowerCase(),
+        })
+      } else {
+        toast({
+          title: "oops! couldn't create new project",
+          description: res.data.message.toLowerCase(),
+        })
+      }
+    } catch (error: any) {
+      console.error("error creating project: ", error)
+      toast({
+        title: "oops! couldn't create new project",
+        description: error?.response?.data?.message || "error, try again!",
+      })
+    }
   };
 
-  const createNewProject = () => {
-    console.log("name: ", name, " desc: ", desc)
-  }
 
   return (
     <div className="flex flex-col w-full h-full dark:bg-dark-secondary dark:text-white px-10">
@@ -54,6 +92,7 @@ const Projects = () => {
                   <Input
                     id="name"
                     placeholder="new project"
+                    value={name}
                     className="col-span-3"
                     onChange={(e) => setName(e.target.value)}
                   />
@@ -64,6 +103,7 @@ const Projects = () => {
                   </Label>
                   <Input
                     id="desc"
+                    value={desc}
                     placeholder="project description..."
                     className="col-span-3"
                     onChange={(e) => setDesc(e.target.value)}
