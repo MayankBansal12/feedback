@@ -1,3 +1,4 @@
+import { Schema } from "mongoose";
 import { FormEvent, SetStateAction, Dispatch } from "react"
 
 export interface LoginFormProps {
@@ -29,5 +30,22 @@ export interface UserType {
     email: string
     isVerified: boolean
     clientSecret: string
+    createdDate: Date
+}
+
+export interface ProjectType {
+    _id: string
+    name: string
+    desc: string
+    isDeleted: boolean
+    createdDate: Date
+}
+
+export interface FormType {
+    _id: string
+    name: string
+    heading: string
+    isDeleted: boolean
+    projectId: Schema.Types.ObjectId
     createdDate: Date
 }

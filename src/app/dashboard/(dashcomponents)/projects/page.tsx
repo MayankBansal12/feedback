@@ -2,7 +2,7 @@
 "use client";
 import { Dock, ExternalLink } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -16,17 +16,21 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import useApi from "@/helpers/useApi";
-import { useUserStore } from "@/global-store/store";
+import { useProjectStore, useUserStore } from "@/global-store/store";
 import { useToast } from "@/components/ui/use-toast";
+import { ProjectType } from "@/types/type";
+import { formatDate } from "@/helpers/format";
 
 const Projects = () => {
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState<ProjectType[]>([]);
   const { user } = useUserStore()
+  const { setProject } = useProjectStore()
   const [name, setName] = useState("")
   const [desc, setDesc] = useState("")
   const callApi = useApi()
   const { toast } = useToast()
 
+  // for creating a new project
   const createNewProject = async () => {
     if (!name) {
       toast({
@@ -42,7 +46,7 @@ const Projects = () => {
       })
       return;
     }
-    // fetch all projects related to that user
+
     try {
       const res = await callApi("/v1/project", "POST", { name, desc }, user.userId, user.clientSecret)
       console.log("new project creaetd:", res)
@@ -66,6 +70,26 @@ const Projects = () => {
     }
   };
 
+  // fetch all projects related to that user
+  const fetchProjects = async () => {
+    if (!user) {
+      return
+    }
+
+    try {
+      const res = await callApi("/v1/project", "GET", {}, user.userId, user.clientSecret)
+      console.log("user projects:", res)
+      if (res.data.success) {
+        setProjects(res.data.data)
+      }
+    } catch (error: any) {
+      console.error("error creating project: ", error)
+    }
+  }
+
+  useEffect(() => {
+    fetchProjects()
+  }, [user])
 
   return (
     <div className="flex flex-col w-full h-full dark:bg-dark-secondary dark:text-white px-10">
@@ -119,7 +143,7 @@ const Projects = () => {
       </div>
 
       <div className="flex flex-col overflow-auto mt-2 pb-10 px-2">
-        {projects.length === 0 ? (
+        {projects && projects.length === 0 ? (
           <div className="shadow-lg my-4 px-4 py-8 border border-light-primary dark:border-light-primary rounded-sm text-center">
             <p>you haven&apos;t created any projects yet :&#40;&#40; </p>
             <p>
@@ -130,14 +154,14 @@ const Projects = () => {
           </div>
         ) : (
           <div className="md:gap-4 lg:gap-5 md:grid grid-cols-2">
-            {projects.map((_, i) => (
-              <Link href="/dashboard/projects/project_id" key={i}>
+            {projects.map((project) => (
+              <Link href={"/dashboard/projects/" + project?._id} key={project?._id} onClick={() => setProject(project)}>
                 <div className="shadow-lg my-4 p-6 border border-light-primary rounded-sm hover:cursor-pointer hover:border-white transition-all">
                   <div className="flex justify-between items-center mb-2">
                     <div className="flex items-center gap-3">
                       <Dock size={20} />
                       <p className="font-semibold text-xl">
-                        twitter feedback
+                        {project?.name?.toLowerCase()}
                       </p>
                     </div>
 
@@ -146,12 +170,12 @@ const Projects = () => {
                   </div>
                   <div className="mb-2">
                     <p className="text-gray-700 dark:text-gray-300">
-                      this is the description of the application.
+                      {project?.desc?.toLowerCase()}
                     </p>
                   </div>
                   <div>
                     <p className="text-right text-sm text-gray-400">
-                      created: 12-07-24
+                      created: {formatDate(project?.createdDate)}
                     </p>
                   </div>
                 </div>

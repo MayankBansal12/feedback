@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { List } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 
 export default function RootLayout({
   children,
@@ -82,16 +82,16 @@ export default function RootLayout({
                   const text = index === 2 ? "project forms" : index === 3 ? "feedback form" : path
 
                   return (
-                    <BreadcrumbItem key={index}>
-                      {!isLast ? (
-                        <>
+                    <Fragment key={index}>
+                      <BreadcrumbItem>
+                        {!isLast ? (
                           <BreadcrumbLink href={href}>{text}</BreadcrumbLink>
-                          <BreadcrumbSeparator />
-                        </>
-                      ) : (
-                        <BreadcrumbPage>{text}</BreadcrumbPage>
-                      )}
-                    </BreadcrumbItem>
+                        ) : (
+                          <BreadcrumbPage>{text}</BreadcrumbPage>
+                        )}
+                      </BreadcrumbItem>
+                      {!isLast && <BreadcrumbSeparator />}
+                    </Fragment>
                   );
                 })}
               </BreadcrumbList>

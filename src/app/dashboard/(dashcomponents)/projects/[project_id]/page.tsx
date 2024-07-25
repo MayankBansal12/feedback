@@ -3,7 +3,7 @@
 import { Separator } from "@/components/ui/separator";
 import { Dock, FilePenLine, Trash2, ExternalLink } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -16,30 +16,139 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
+import { useFormStore, useProjectStore, useUserStore } from "@/global-store/store";
+import useApi from "@/helpers/useApi";
+import { FormType } from "@/types/type";
+import { formatDate } from "@/helpers/format";
+import { useToast } from "@/components/ui/use-toast";
 
-const Projects = () => {
-  const [projects, setProjects] = useState([1, 1, 1]);
-  const [editModal, setEditModal] = useState<boolean>(false);
-  const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
+const Forms = ({ params }: { params: { project_id: string } }) => {
+  const [forms, setForms] = useState<FormType[]>([])
+  const { user } = useUserStore()
+  const { project } = useProjectStore()
+  const { setForm } = useFormStore()
+  const callApi = useApi()
+  const [loading, setLoading] = useState(false)
   const [name, setName] = useState("")
   const [desc, setDesc] = useState("")
+  const [formName, setFormName] = useState("")
+  const [heading, setHeading] = useState("")
+  const { toast } = useToast()
 
-  const fetchProjects = () => {
-    // fetch all projects related to that user
-  };
+  // create a new form using name and heading
+  const createNewForm = async () => {
+    if (!formName || !heading) {
+      toast({
+        title: "name/heading can't be empty!",
+        description: "give your form a name and a heading and try again!",
+      })
+      return;
+    }
+    if (!user) {
+      toast({
+        title: "oops! couldn't create new form",
+        description: "refresh and try again!",
+      })
+      return;
+    }
+    setLoading(true)
 
-  const createNewForm = () => {
-    console.log("name: ", name, " desc: ", desc)
+    try {
+      const res = await callApi("/v1/form", "POST", { name: formName, heading, type: "long", projectId: params.project_id }, user.userId, user.clientSecret)
+
+      if (res.data.success) {
+        toast({
+          title: "form created!",
+          description: res.data.message.toLowerCase(),
+        })
+      } else {
+        toast({
+          title: "oops! couldn't create new form",
+          description: res.data.message.toLowerCase(),
+        })
+      }
+    } catch (error: any) {
+      console.error("error creating form: ", error)
+      toast({
+        title: "oops! couldn't create new form",
+        description: error?.response?.data?.message || "error, try again!",
+      })
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const editForm = () => {
-    console.log("edit:  name: ", name, " desc: ", desc)
+  // edit the project name and desc
+  const editProject = async () => {
+    if (!name) {
+      toast({
+        title: "name can't be empty!",
+        description: "give your project a name and try again!",
+      })
+      return;
+    }
+    if (!user) {
+      toast({
+        title: "oops! couldn't create new project",
+        description: "refresh and try again!",
+      })
+      return;
+    }
+
+    setLoading(true)
+
+    try {
+      const res = await callApi("/v1/project" + params.project_id, "PUT", { name, desc }, user.userId, user.clientSecret)
+
+      if (res.data.success) {
+        toast({
+          title: "project created!",
+          description: res.data.message.toLowerCase(),
+        })
+      } else {
+        toast({
+          title: "oops! couldn't create new project",
+          description: res.data.message.toLowerCase(),
+        })
+      }
+    } catch (error: any) {
+      console.error("error creating project: ", error)
+      toast({
+        title: "oops! couldn't create new project",
+        description: error?.response?.data?.message || "error, try again!",
+      })
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const deleteHandler = () => {
-    // delete code
+  // fetch all forms related to that user
+  const fetchForms = async () => {
+    if (!user) {
+      return
+    }
+
+    try {
+      const res = await callApi("/v1/form?projectId=" + params.project_id, "GET", {}, user.userId, user.clientSecret)
+      console.log("project forms:", res)
+      if (res.data.success) {
+        setForms(res.data.data)
+      }
+    } catch (error: any) {
+      console.error("error creating project: ", error)
+    }
   };
+
+  useEffect(() => {
+    console.log("project: ", project)
+    setName(project?.name ?? "")
+    setDesc(project?.desc ?? "")
+  }, [project])
+
+  useEffect(() => {
+    fetchForms()
+  }, [user, params.project_id])
 
   return (
     <div className="flex flex-col w-full h-full dark:bg-dark-secondary dark:text-white px-10">
@@ -64,8 +173,8 @@ const Projects = () => {
                   </Label>
                   <Input
                     id="name"
-                    defaultValue={"new project"}
                     className="col-span-3"
+                    value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
@@ -75,14 +184,14 @@ const Projects = () => {
                   </Label>
                   <Input
                     id="desc"
-                    defaultValue={"project desc"}
                     className="col-span-3"
+                    value={desc}
                     onChange={(e) => setDesc(e.target.value)}
                   />
                 </div>
               </div>
               <DialogFooter>
-                <Button type="submit" onClick={editForm} className="bg-accent-link hover:bg-accent-buttonhover transition-all py-1 px-4 rounded-full text-white">edit project</Button>
+                <Button type="submit" onClick={editProject} className="bg-accent-link hover:bg-accent-buttonhover transition-all py-1 px-4 rounded-full text-white" disabled={loading}>edit project</Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
@@ -106,30 +215,32 @@ const Projects = () => {
                     id="name"
                     placeholder="new form"
                     className="col-span-3"
-                    onChange={(e) => setName(e.target.value)}
+                    value={formName}
+                    onChange={(e) => setFormName(e.target.value)}
                   />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="desc" className="text-right">
+                  <Label htmlFor="heading" className="text-right">
                     form heading
                   </Label>
                   <Input
-                    id="desc"
+                    id="heading"
                     placeholder="form heading..."
                     className="col-span-3"
-                    onChange={(e) => setDesc(e.target.value)}
+                    value={heading}
+                    onChange={(e) => setHeading(e.target.value)}
                   />
                 </div>
               </div>
               <DialogFooter>
-                <Button type="submit" onClick={createNewForm} className="bg-accent-link hover:bg-accent-buttonhover transition-all py-1 px-4 rounded-full text-white">create new form</Button>
+                <Button type="submit" onClick={createNewForm} className="bg-accent-link hover:bg-accent-buttonhover transition-all py-1 px-4 rounded-full text-white" disabled={loading}>create new form</Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
         </div>
       </div>
 
-      {projects.length === 0 ? (
+      {forms.length === 0 ? (
         <div className="shadow-lg my-4 px-4 py-8 border border-light-primary dark:border-light-primary rounded-sm text-center">
           <p>no feedback received yet?</p>
           <p>no worries! we&apos;ll help you out!</p>
@@ -142,14 +253,14 @@ const Projects = () => {
         </div>
       ) : (
         <div className="md:gap-4 lg:gap-5 md:grid grid-cols-2">
-          {projects.map((_, i) => (
-            <Link href="/dashboard/projects/project_id/form_id" key={i}>
+          {forms.map((form) => (
+            <Link href={"/dashboard/projects/" + params.project_id + "/" + form._id} key={form._id} onClick={() => setForm(form)}>
               <div className="shadow-lg my-4 p-6 border border-light-primary rounded-sm hover:cursor-pointer hover:border-white transition-all">
                 <div className="flex justify-between items-center mb-2">
                   <div className="flex items-center gap-3">
                     <Dock size={20} />
                     <p className="font-semibold text-xl">
-                      feedback form 1
+                      {form?.name ?? ""}
                     </p>
                   </div>
 
@@ -157,18 +268,18 @@ const Projects = () => {
                 </div>
                 <div className="my-2">
                   <p className="text-gray-700 dark:text-gray-300">
-                    this is the form heading.
+                    {form?.heading ?? ""}
                   </p>
                 </div>
                 <div className="mb-2 flex gap-2">
-                  <p className="font-medium">total feedback received: <span className="font-semibold">100</span></p>
+                  <p className="font-medium">total feedback received: <span className="font-semibold">n/a</span></p>
                   <Separator orientation="vertical" className="h-5 bg-black dark:bg-white" />
-                  <p>overall rating: <span className="font-semibold">4.3</span></p>
+                  <p>overall rating: <span className="font-semibold">n/a</span></p>
                 </div>
 
                 <div>
                   <p className="text-right text-sm text-gray-400">
-                    created: 12-07-24
+                    created: {formatDate(form.createdDate)}
                   </p>
                 </div>
               </div>
@@ -176,7 +287,8 @@ const Projects = () => {
           ))}
         </div>
       )}
-      {deleteModal && (
+
+      {/* {deleteModal && (
         <div className="top-0 left-0 fixed flex justify-center items-center bg-gray-500 bg-opacity-50 w-full h-full">
           <div className="dark:bg-dark-secondary px-5 py-5">
             <p className="text-lg dark:text-white">
@@ -198,9 +310,9 @@ const Projects = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
 
-export default Projects;
+export default Forms
