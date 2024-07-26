@@ -2,7 +2,7 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
 import { Check, Copy, Dock } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -33,14 +33,16 @@ const FormInfo = ({ params }: { params: { form_id: string } }) => {
   const [name, setName] = useState("")
   const [heading, setHeading] = useState("")
 
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(params.form_id)
+  useEffect(() => {
+    setName(form?.name ?? "")
+    setHeading(form?.heading ?? "")
+  }, [form])
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(params.form_id).then(() => {
       setIsCopied(true)
       setTimeout(() => setIsCopied(false), 3000)
-    } catch (error) {
-      console.error("error copying text: ", error)
-    }
+    })
   }
 
   // edit the form name and desc
@@ -52,9 +54,9 @@ const FormInfo = ({ params }: { params: { form_id: string } }) => {
       })
       return;
     }
-    if (!user) {
+    if (!user || !form) {
       toast({
-        title: "oops! couldn't create new project",
+        title: "oops! couldn't edit project",
         description: "refresh and try again!",
       })
       return;
@@ -63,7 +65,7 @@ const FormInfo = ({ params }: { params: { form_id: string } }) => {
     setLoading(true)
 
     try {
-      const res = await callApi("/v1/form" + params.form_id, "PUT", { name, heading }, user.userId, user.clientSecret)
+      const res = await callApi("/v1/form/" + params.form_id, "PUT", { name, heading, projectId: form?.projectId, type: "long" }, user.userId, user.clientSecret)
 
       if (res.data.success) {
         toast({
@@ -72,14 +74,14 @@ const FormInfo = ({ params }: { params: { form_id: string } }) => {
         })
       } else {
         toast({
-          title: "oops! couldn't create new form",
+          title: "oops! couldn't edit form",
           description: res.data.message.toLowerCase(),
         })
       }
     } catch (error: any) {
-      console.error("error creating form: ", error)
+      console.error("error editing form: ", error)
       toast({
-        title: "oops! couldn't create new form",
+        title: "oops! couldn't editing form",
         description: error?.response?.data?.message || "error, try again!",
       })
     } finally {
@@ -139,7 +141,6 @@ const FormInfo = ({ params }: { params: { form_id: string } }) => {
                     </Label>
                     <Input
                       id="formName"
-                      placeholder="new form"
                       value={name}
                       className="col-span-3"
                       onChange={(e) => setName(e.target.value)}
@@ -151,7 +152,6 @@ const FormInfo = ({ params }: { params: { form_id: string } }) => {
                     </Label>
                     <Input
                       id="heading"
-                      placeholder="form heading"
                       value={heading}
                       className="col-span-3"
                       onChange={(e) => setHeading(e.target.value)}
@@ -173,7 +173,7 @@ const FormInfo = ({ params }: { params: { form_id: string } }) => {
               <div className="flex items-center h-7 gap-1">
                 <Input
                   id="link"
-                  value={form?._id ?? "refresh and try again"}
+                  value={form ? form._id : "refresh and try again"}
                   className="bg-light-primary h-full dark:bg-dark-primary opacity-75 text-md"
                   readOnly
                 />
@@ -183,8 +183,12 @@ const FormInfo = ({ params }: { params: { form_id: string } }) => {
               </div>
             </div>
             <div className="flex flex-col gap-1">
-              <p className="text-sm text-gray-400">created on:</p>
-              <p className="font-semibold mt-1">{form ? formatDate(form.createdDate) : "n/a"}</p>
+              {form &&
+                <>
+                  <p className="text-sm text-gray-400">created on:</p>
+                  <p className="font-semibold mt-1">{formatDate(form.createdDate)}</p>
+                </>
+              }
             </div>
           </div>
         </div>

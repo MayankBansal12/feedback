@@ -1,7 +1,7 @@
 import isSecretValid from "@/helpers/validSecret";
 import dbConnect from "@/lib/dbConnect";
 import FormModel from "@/models/Form";
-import { formSchema } from "@/schemas/formSchema";
+import { editFormSchema } from "@/schemas/formSchema";
 import { ApiResponse } from "@/types/ApiResponse";
 import { z } from "zod";
 
@@ -61,9 +61,9 @@ export async function PUT(
 
   try {
     const reqData = await request.json();
-    const { name, heading } = formSchema.parse(reqData);
+    const { name, heading } = editFormSchema.parse(reqData);
     const form = await FormModel.findByIdAndUpdate(
-      { _id: params.id },
+      params.id,
       { name, heading }
     );
     response = {
@@ -75,6 +75,7 @@ export async function PUT(
     return new Response(JSON.stringify(response), { status: response.status });
   } catch (error) {
     if (error instanceof z.ZodError) {
+      console.log("zod error: ", error)
       response = {
         success: false,
         status: 400,

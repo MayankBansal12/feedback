@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
         const searchParams = req.nextUrl.searchParams
         const formId = searchParams.get('formId')
         if (!formId) {
-            response = { success: true, status: 400, message: "record can't be empty" };
+            response = { success: true, status: 400, message: "formId can't be empty" };
         } else {
             const records = await RecordModel.find({ formId: new ObjectId(formId) }).sort({ createdDate: -1 })
             response = { success: true, status: 200, message: "success fetching records", data: records };

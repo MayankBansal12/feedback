@@ -24,7 +24,7 @@ export default function RootLayout({
       <head />
       <body className="font-default">
         <StoreIntializer />
-        <main>{children}</main>
+        <div>{children}</div>
         <Toaster />
         <Analytics />
         <SpeedInsights />
