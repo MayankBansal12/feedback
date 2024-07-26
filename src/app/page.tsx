@@ -108,7 +108,7 @@ export default function Home() {
                 <span className="px-4">⭐</span>
                 <p>
                   we&apos;ll take care of your users feedbacks and reviews; so
-                  you just focus on your upgrading your site or app.
+                  you just focus on your product.
                 </p>
               </div>
               <div className="flex">
@@ -134,7 +134,16 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col justify-center items-center gap-2 mt-20 mb-10">
-              <h2 className="text-xl">that&apos;s what we are building!</h2>
+              <h2 className="text-white text-xl">what are we building 🤔</h2>
+              <p className="px-4 lg:px-20 text-center text-white">
+                we understand that as a builder, collecting and analyzing user
+                feedback can be challenging.
+                <br /> it is tedious to gather insights and turn them into
+                actionable improvements for your project.
+                <br /> our goal is to simplify this process, making it easier
+                for you to understand your users&apos; needs and enhance their
+                experience.
+              </p>
               <Carousel className="w-2/3">
                 <CarouselContent>
                   {assets.map((item, i) => (
