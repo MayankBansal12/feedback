@@ -1,5 +1,5 @@
 
-export const formatDate = async (inputDate: Date | string | null) => {
+export const formatDate = (inputDate: Date | string | null) => {
     if (!inputDate || inputDate === "") {
         return "n/a"
     }
