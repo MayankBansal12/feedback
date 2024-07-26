@@ -5,16 +5,22 @@ import icon from "../asset/icon.svg";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useUserStore } from "@/global-store/store";
+import { usePathname } from "next/navigation";
+import { ArrowUpRight } from "lucide-react";
 
 export default function Nav() {
   const [darkMode, setDarkMode] = useState(true);
+  const path = usePathname();
   const { user } = useUserStore();
+  const [isDashboard, setIsDashboard] = useState(false);
 
   useEffect(() => {
     const theme = localStorage.getItem("theme");
     if (theme === "dark") {
       setDarkMode(true);
     }
+    const isDash = path != null ? path.startsWith("/dashboard") : false;
+    setIsDashboard(isDash);
   }, []);
 
   useEffect(() => {
@@ -75,8 +81,15 @@ export default function Nav() {
             </svg>
           </span>
         </div>
-        <span className="hover:underline hover:underline-offset-4">
-          {user ? (
+        <span className="hover:underline hover:underline-offset-4 transition-all">
+          <Link href="/docs/welcome" className="flex">
+            docs <ArrowUpRight />
+          </Link>
+        </span>
+        <span className="hover:underline hover:underline-offset-4 transition-all">
+          {isDashboard ? (
+            <Link href="/dashboard/newsletter">newsletter</Link>
+          ) : user ? (
             <Link href="/dashboard">dashboard</Link>
           ) : (
             <Link href="/auth?login=true">login</Link>

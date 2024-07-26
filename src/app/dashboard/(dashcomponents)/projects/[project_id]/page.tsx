@@ -1,77 +1,339 @@
 /** @format */
 "use client";
-import { Dock, FilePenLine, Trash2 } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import { Dock, FilePenLine, Trash2, ExternalLink } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import {
+  useFormStore,
+  useProjectStore,
+  useUserStore,
+} from "@/global-store/store";
+import useApi from "@/helpers/useApi";
+import { FormType } from "@/types/type";
+import { formatDate } from "@/helpers/format";
+import { useToast } from "@/components/ui/use-toast";
 
-const Projects = () => {
-  const [projects, setProjects] = useState([1]);
-  const [editModal, setEditModal] = useState<boolean>(false);
-  const [deleteModal, setDeleteModal] = useState<boolean>(false);
-  const deleteHandler = () => {
-    // delete code
+const Forms = ({ params }: { params: { project_id: string } }) => {
+  const [forms, setForms] = useState<FormType[]>([]);
+  const { user } = useUserStore();
+  const { project } = useProjectStore();
+  const { setForm } = useFormStore();
+  const callApi = useApi();
+  const [loading, setLoading] = useState(false);
+  const [name, setName] = useState("");
+  const [desc, setDesc] = useState("");
+  const [formName, setFormName] = useState("");
+  const [heading, setHeading] = useState("");
+  const { toast } = useToast();
+
+  // create a new form using name and heading
+  const createNewForm = async () => {
+    if (!formName || !heading) {
+      toast({
+        title: "name/heading can't be empty!",
+        description: "give your form a name and a heading and try again!",
+      });
+      return;
+    }
+    if (!user) {
+      toast({
+        title: "oops! couldn't create new form",
+        description: "refresh and try again!",
+      });
+      return;
+    }
+    setLoading(true);
+
+    try {
+      const res = await callApi(
+        "/v1/form",
+        "POST",
+        { name: formName, heading, type: "long", projectId: params.project_id },
+        user.userId,
+        user.clientSecret
+      );
+
+      if (res.data.success) {
+        toast({
+          title: "form created!",
+          description: res.data.message.toLowerCase(),
+        });
+      } else {
+        toast({
+          title: "oops! couldn't create new form",
+          description: res.data.message.toLowerCase(),
+        });
+      }
+    } catch (error: any) {
+      console.error("error creating form: ", error);
+      toast({
+        title: "oops! couldn't create new form",
+        description: error?.response?.data?.message || "error, try again!",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
+
+  // edit the project name and desc
+  const editProject = async () => {
+    if (!name) {
+      toast({
+        title: "name can't be empty!",
+        description: "give your project a name and try again!",
+      });
+      return;
+    }
+    if (!user) {
+      toast({
+        title: "oops! couldn't create new project",
+        description: "refresh and try again!",
+      });
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const res = await callApi(
+        "/v1/project" + params.project_id,
+        "PUT",
+        { name, desc },
+        user.userId,
+        user.clientSecret
+      );
+
+      if (res.data.success) {
+        toast({
+          title: "project created!",
+          description: res.data.message.toLowerCase(),
+        });
+      } else {
+        toast({
+          title: "oops! couldn't create new project",
+          description: res.data.message.toLowerCase(),
+        });
+      }
+    } catch (error: any) {
+      console.error("error creating project: ", error);
+      toast({
+        title: "oops! couldn't create new project",
+        description: error?.response?.data?.message || "error, try again!",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // fetch all forms related to that user
+  const fetchForms = async () => {
+    if (!user) {
+      return;
+    }
+
+    try {
+      const res = await callApi(
+        "/v1/form?projectId=" + params.project_id,
+        "GET",
+        {},
+        user.userId,
+        user.clientSecret
+      );
+      console.log("project forms:", res);
+      if (res.data.success) {
+        setForms(res.data.data);
+      }
+    } catch (error: any) {
+      console.error("error creating project: ", error);
+    }
+  };
+
+  useEffect(() => {
+    console.log("project: ", project);
+    setName(project?.name ?? "");
+    setDesc(project?.desc ?? "");
+  }, [project]);
+
+  useEffect(() => {
+    fetchForms();
+  }, [user, params.project_id]);
+
   return (
-    <div className="flex flex-col dark:bg-dark-secondary px-10 py-10 w-full h-full dark:text-white">
-      <div className="flex flex-col justify-start gap-3 my-4 w-full text-left">
-        <p className="text-xl">twitter_feedback 🚀</p>
-        <p className="text-md">
-          take a look at the feedbacks you received for this project .
-        </p>
+    <div className="flex flex-col dark:bg-dark-secondary px-10 w-full h-full dark:text-white">
+      <div className="flex justify-between items-center gap-4">
+        <h1 className="pt-1 pb-3 font-semibold text-xl">project forms</h1>
+        <div className="flex items-center gap-4">
+          <Dialog>
+            <DialogTrigger className="text-gray-600 hover:text-black dark:hover:text-white dark:text-gray-300 transition-all">
+              edit project
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>edit project</DialogTitle>
+                <DialogDescription>
+                  edit project name and project description here
+                </DialogDescription>
+              </DialogHeader>
+              <div className="gap-4 grid py-4">
+                <div className="items-center gap-4 grid grid-cols-4">
+                  <Label htmlFor="name" className="text-right">
+                    project name
+                  </Label>
+                  <Input
+                    id="name"
+                    className="col-span-3"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div className="items-center gap-4 grid grid-cols-4">
+                  <Label htmlFor="desc" className="text-right">
+                    project desc
+                  </Label>
+                  <Input
+                    id="desc"
+                    className="col-span-3"
+                    value={desc}
+                    onChange={(e) => setDesc(e.target.value)}
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button
+                  type="submit"
+                  onClick={editProject}
+                  className="bg-accent-link hover:bg-accent-buttonhover px-4 py-1 rounded-full text-white transition-all"
+                  disabled={loading}
+                >
+                  edit project
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+          <Dialog>
+            <DialogTrigger className="bg-accent-link hover:bg-accent-buttonhover px-4 py-1 rounded-full text-white transition-all">
+              add new form
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>create new form</DialogTitle>
+                <DialogDescription>
+                  create new form and keep a track of all feedback with that.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="gap-4 grid py-4">
+                <div className="items-center gap-4 grid grid-cols-4">
+                  <Label htmlFor="name" className="text-right">
+                    form name
+                  </Label>
+                  <Input
+                    id="name"
+                    placeholder="new form"
+                    className="col-span-3"
+                    value={formName}
+                    onChange={(e) => setFormName(e.target.value)}
+                  />
+                </div>
+                <div className="items-center gap-4 grid grid-cols-4">
+                  <Label htmlFor="heading" className="text-right">
+                    form heading
+                  </Label>
+                  <Input
+                    id="heading"
+                    placeholder="form heading..."
+                    className="col-span-3"
+                    value={heading}
+                    onChange={(e) => setHeading(e.target.value)}
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button
+                  type="submit"
+                  onClick={createNewForm}
+                  className="bg-accent-link hover:bg-accent-buttonhover px-4 py-1 rounded-full text-white transition-all"
+                  disabled={loading}
+                >
+                  create new form
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
-      <div className="flex justify-center items-center my-4">
-        <hr className="border-2 dark:border-gray-400 border-light-primary rounded-full w-1/6" />
-      </div>
-      <div className="text-accent-link">
-        <Link href="/dashboard/create/">+ create a new feedback.</Link>
-      </div>
-      {projects.length === 0 ? (
-        <div className="shadow-lg my-4 p-4 border border-light-primary dark:border-light-primary rounded-sm text-center">
-          <p>no feedback received yet? 🤔</p>
-          <p>no worries! you can chill for a bit.</p>
+
+      {forms.length === 0 ? (
+        <div className="shadow-lg my-4 px-4 py-8 border border-light-primary dark:border-light-primary rounded-sm text-center">
+          <p>no feedback received yet?</p>
+          <p>no worries! we&apos;ll help you out!</p>
           <p>
             or if you haven&apos;t created any feedback forms yet?{" "}
-            <Link href="/dashboard/docs" className="text-accent-link">
+            <Link href="/dashboard/projects" className="text-accent-link">
               get started here.
             </Link>
           </p>
         </div>
       ) : (
-        <div className="md:gap-5 lg:gap-10 grid md:grid-cols-2 xl:grid-cols-3 my-2">
-          <div className="shadow-lg my-4 p-4 border border-light-primary dark:border-light-primary rounded-sm">
-            <div className="flex justify-between items-center mb-4">
-              <Link href="/dashboard/projects/project_id/form_id">
-                <div className="flex items-center gap-3">
-                  <Dock size={20} />
-                  <p className="font-semibold text-xl underline">
-                    feedback_form_1
+        <div className="md:gap-4 lg:gap-5 md:grid grid-cols-2">
+          {forms.map((form) => (
+            <Link
+              href={"/dashboard/projects/" + params.project_id + "/" + form._id}
+              key={form._id}
+              onClick={() => setForm(form)}
+            >
+              <div className="hover:border-white shadow-lg my-4 p-6 border border-light-primary rounded-sm transition-all hover:cursor-pointer">
+                <div className="flex justify-between items-center mb-2">
+                  <div className="flex items-center gap-3">
+                    <Dock size={20} />
+                    <p className="font-semibold text-xl">{form?.name ?? ""}</p>
+                  </div>
+
+                  <ExternalLink />
+                </div>
+                <div className="my-2">
+                  <p className="text-gray-700 dark:text-gray-300">
+                    {form?.heading ?? ""}
                   </p>
                 </div>
-              </Link>
-              <div className="flex items-center gap-2">
-                <button onClick={() => setDeleteModal(true)}>
-                  <Trash2 size={20} />
-                </button>
-                <FilePenLine size={20} />
+                <div className="flex gap-2 mb-2">
+                  <p className="font-medium">
+                    total feedback received:{" "}
+                    <span className="font-semibold">n/a</span>
+                  </p>
+                  <Separator
+                    orientation="vertical"
+                    className="bg-black dark:bg-white h-5"
+                  />
+                  <p>
+                    overall rating: <span className="font-semibold">n/a</span>
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-right text-gray-400 text-sm">
+                    created: {formatDate(form.createdDate)}
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="mb-2">
-              <p className="font-medium">total feedback received: 100</p>
-            </div>
-            <div className="mb-2">
-              <p className="text-gray-700 dark:text-gray-300">
-                this is the form heading.
-              </p>
-            </div>
-            <div>
-              <p className="text-right font-md text-sm">
-                created_date: 12/7/2024
-              </p>
-            </div>
-          </div>
+            </Link>
+          ))}
         </div>
       )}
-      {deleteModal && (
+
+      {/* {deleteModal && (
         <div className="top-0 left-0 fixed flex justify-center items-center bg-gray-500 bg-opacity-50 w-full h-full">
           <div className="dark:bg-dark-secondary px-5 py-5">
             <p className="text-lg dark:text-white">
@@ -93,9 +355,9 @@ const Projects = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
 
-export default Projects;
+export default Forms;

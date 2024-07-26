@@ -55,12 +55,13 @@ export async function POST(req: Request) {
         const { name, heading, type, projectId } = formSchema.parse(reqData)
 
         const newRecord = new FormModel({ name, heading, type, projectId })
-        newRecord.save()
+        await newRecord.save()
 
         response = { success: true, status: 200, message: "Submitted the form!", data: newRecord };
         return new Response(JSON.stringify(response), { status: response.status })
     } catch (error) {
         if (error instanceof z.ZodError) {
+            console.log("error:", error)
             response = { success: false, status: 400, message: error.errors[0].message };
         } else {
             console.error("Error creating a form!", error);

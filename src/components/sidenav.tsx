@@ -12,7 +12,7 @@ const SideNav = () => {
     //  { name: "create form", link: "/dashboard/create" },
     // { name: "post", link: "/dashboard/post_content" },
     { name: "logs", link: "/dashboard/logs" },
-    { name: "docs", link: "/dashboard/docs" },
+    { name: "get started", link: "/dashboard/get-started" },
     { name: "settings", link: "/dashboard/settings" },
   ];
   const pathname = usePathname();
@@ -24,7 +24,7 @@ const SideNav = () => {
           <div className="flex flex-col justify-center items-center gap-10 md:gap-20">
             <div className="flex flex-col gap-2 w-full text-center md:text-left">
               {navLinks.map((link, index) => {
-                const isActive = pathname.endsWith(link.link);
+                const isActive = pathname?.endsWith(link.link);
                 return (
                   <Link
                     key={index}
@@ -45,7 +45,7 @@ const SideNav = () => {
               <br />
               everything is
               <br />
-              safe. ^-^
+              safe with us. ^-^
             </div>
           </div>
         </div>

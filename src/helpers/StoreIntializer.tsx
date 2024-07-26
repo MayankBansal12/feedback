@@ -15,8 +15,6 @@ export default function StoreIntializer() {
                 fetchUserDetails(token);
             }
         }, 1000)
-
-        console.log("user from store: ", user)
     }, []);
 
     const fetchUserDetails = async (token: string) => {
@@ -28,8 +26,7 @@ export default function StoreIntializer() {
                 }
             });
             const data = await response.json();
-            console.log("data from token ", data.data)
-            setUser(data.data.user);
+            setUser(data.data);
         } catch (error) {
             console.error('Error fetching user details:', error);
         }
