@@ -36,7 +36,7 @@ const LoginForm: FC<LoginFormProps> = ({ email, setEmail, password, setPassword,
             className="bg-accent-link hover:bg-accent-buttonhover transition-all p-1 rounded-full w-1/2 text-white"
             disabled={isLoading}
           >
-            {isLoading ? "loading..." : "login"}
+            {isLoading ? "logging you in..." : "login"}
           </button>
         </div>
       </form>
@@ -90,7 +90,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ name, setName, email, setEmail, p
             className="bg-accent-link hover:bg-accent-buttonhover transition-all p-1 rounded-full w-1/2 text-white"
             disabled={isLoading}
           >
-            {isLoading ? "loading..." : "sign up"}
+            {isLoading ? "creating your account..." : "sign up"}
           </button>
         </div>
       </form>

@@ -80,7 +80,7 @@ export default function Reset() {
                         className="bg-accent-link hover:bg-accent-buttonhover transition-all p-1 rounded-full w-1/2 text-white"
                         disabled={isLoading}
                     >
-                        {isLoading ? "loading..." : "send link"}
+                        {isLoading ? "sending..." : "send link"}
                     </button>
                 </div>
                 <button className="mt-4">

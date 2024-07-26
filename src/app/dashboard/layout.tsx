@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button";
 import { List } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { useEffect, useState, Fragment } from "react";
 
 export default function RootLayout({
@@ -31,6 +31,10 @@ export default function RootLayout({
   const [paths, setPaths] = useState<string[]>([])
 
   useEffect(() => {
+    const token = localStorage.getItem("token")
+    if (!token || token === "") {
+      redirect("/auth?login=true")
+    }
     if (path != null)
       setPaths(path.split("/").slice(1))
   }, [path])

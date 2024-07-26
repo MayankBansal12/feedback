@@ -66,7 +66,7 @@ const Settings = () => {
   const callApi = useApi()
 
   useEffect(() => {
-    setName(user?.name.toLowerCase() ?? "")
+    setName(user?.name?.toLowerCase() ?? "")
   }, [user])
 
   const saveProfile = async () => {
@@ -157,7 +157,7 @@ const Settings = () => {
               <div className="space-y-1">
                 <Label htmlFor="clientId">client id</Label>
                 <div className="flex gap-1 items-center">
-                  <Input id="clientId" defaultValue={user?.userId ?? ""} className="w-1/2" readOnly disabled />
+                  <Input id="clientId" defaultValue={user?.userId ?? "unable to fetch, refresh the page"} className="w-1/2" readOnly disabled />
                   <Button onClick={() => handleCopy(user?.userId ?? "", "clientId")} className="h-full px-2 bg-light-primary hover:bg-light-secondary dark:bg-dark-primary dark:hover:bg-dark-secondary transition-all">
                     {isCopied === "clientId" ? <Check className="text-black dark:text-white" /> : <Copy className="text-black dark:text-white" />}
                   </Button>
@@ -193,7 +193,7 @@ const Settings = () => {
             <CardContent className="space-y-2">
               <div className="space-y-1">
                 <Label htmlFor="name">name</Label>
-                <Input id="name" defaultValue="name eg:- mayank" value={name} onChange={(e) => setName(e.target.value)} className="w-1/2" />
+                <Input id="name" value={name} onChange={(e) => setName(e.target.value)} className="w-1/2" />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="email">email</Label>
