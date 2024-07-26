@@ -105,7 +105,7 @@ export default function Verify() {
                     disabled={isLoading}
                     onClick={handleSubmit}
                 >
-                    {isLoading ? "loading..." : "verify"}
+                    {isLoading ? "verifying..." : "verify"}
                 </button>
             </div>
 

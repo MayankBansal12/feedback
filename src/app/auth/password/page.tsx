@@ -100,7 +100,7 @@ const PasswordComponent = () => {
                         className="bg-accent-link hover:bg-accent-buttonhover transition-all p-1 rounded-full w-1/2 text-white"
                         disabled={isLoading}
                     >
-                        {isLoading ? "loading..." : "reset passwd"}
+                        {isLoading ? "changing..." : "reset passwd"}
                     </button>
                 </div>
             </form>
