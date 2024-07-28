@@ -13,7 +13,7 @@ export default function Dash() {
       <h1 className="py-10 text-xl font-semibold">dashboard</h1>
       <div className="flex flex-col justify-center items-center gap-8 h-2/3">
         <h2 className="text-center text-xl">
-          <p>hey <span className="font-semibold">{user ? user.name : ""}</span>. how ya doin'</p>
+          <p>hey <span className="font-semibold">{user ? user.name : ""}</span>. how ya doin&apos;</p>
           <p>welcome to <span className="font-semibold">feedback</span>. </p>
         </h2>
         <div className="flex w-3/4 justify-center gap-10">
@@ -31,7 +31,7 @@ export default function Dash() {
           </div> */}
 
           <ol>
-            <li>- collect and manage user's feedback on your product</li>
+            <li>- collect and manage user&apos;s feedback on your product</li>
             <li>- go to <Link href="/dashboard/get-started" className="text-accent-link hover:text-accent-buttonhover transition-all">getting started</Link> for a head start</li>
             <li>- visit <Link href="/docs/welcome" className="text-accent-link hover:text-accent-buttonhover transition-all">feedback docs</Link> for api references and more.</li>
             <li>- in case of feat request or complaint, feel free to submit a feedback</li>
